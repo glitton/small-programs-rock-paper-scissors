@@ -80,7 +80,10 @@ while (true) {
       )} which are equivalent to ${VALID_CHOICES.join(", ")}`
     );
     choice = readline.question();
-  
+  }
+
+  finalUserChoice(choice);
+  choice = validUserChoice;
 
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
