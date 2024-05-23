@@ -38,15 +38,52 @@ function displayWinner(choice, computerChoice) {
     prompt("It's a tie!");
   }
 }
+// New array with shortened version of the valid choices
+let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
+
+//function to convert shortened choices back to real words
+let validUserChoice;
+function finalUserChoice(choice) {
+  switch (choice) {
+    case "ro":
+      validUserChoice = "rock";
+      break;
+    case "pa":
+      validUserChoice = "paper";
+      break;
+    case "sc":
+      validUserChoice = "scissors";
+      break;
+    case "li":
+      validUserChoice = "lizard";
+      break;
+    case "sp":
+      validUserChoice = "spock";
+      break;
+  }
+  return validUserChoice;
+}
 
 while (true) {
-  prompt(`Choose one: ${VALID_CHOICES.join(", ")}`);
+  prompt("Let's play rock paper scissors lizard spock!");
+  prompt(
+    `Choose either ${shortenedChoices.join(
+      ", "
+    )} which are equivalent to ${VALID_CHOICES.join(", ")} `
+  );
   let choice = readline.question();
 
-  while (!VALID_CHOICES.includes(choice)) {
-    prompt("That's not a valid choice");
+  while (!shortenedChoices.includes(choice)) {
+    prompt(
+      `That's not a valid choice. Choose either ${shortenedChoices.join(
+        ", "
+      )} which are equivalent to ${VALID_CHOICES.join(", ")}`
+    );
     choice = readline.question();
   }
+
+  finalUserChoice(choice);
+  choice = validUserChoice;
 
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
@@ -59,6 +96,7 @@ while (true) {
     prompt("Please enter 'y' or 'n'");
     answer = readline.question();
   }
+  console.clear();
   if (answer[0] !== "y") {
     prompt("Thanks for playing, goodbye!");
     return false;
