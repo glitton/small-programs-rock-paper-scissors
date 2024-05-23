@@ -37,3 +37,10 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 console.log(finalUserChoice("li"));
+
+// check if user entered shorter word, if entered the long word, then
+// choice will be equal to the word
+// if (!shortenedChoices.includes(choice)) {
+//   finalUserChoice(choice);
+//   choice = validUserChoice;
+// }
