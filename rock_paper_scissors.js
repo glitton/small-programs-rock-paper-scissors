@@ -11,6 +11,7 @@ const WINNING_COMBOS = {
 
 let playerScore = 0;
 let computerScore = 0;
+let tie = 0;
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -29,6 +30,12 @@ function computerWins(choice, computerChoice) {
   return WINNING_COMBOS[computerChoice].includes(choice);
 }
 
+function displayTie(choice, computerChoice) {
+  return (
+    playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
+  );
+}
+// FIX this , not sure it works yet
 function gameWinner(playerScore, computerScore) {
   if (playerScore === 3 && round < 5) {
     prompt("you win the game!");
@@ -36,8 +43,8 @@ function gameWinner(playerScore, computerScore) {
     prompt("computer wins the game!");
   } else if (playerScore === computerScore && round < 5) {
     prompt("No winner yet, on to the next round");
-  } else {
-    prompt("No one won 3 out of five.");
+  } else if (playerScore === computerScore && round === 5) {
+    prompt("No one won three out of five.");
   }
 }
 
@@ -50,6 +57,8 @@ function displayRoundWinner(choice, computerChoice) {
     prompt(MESSAGES["computerWins"]);
     computerScore += 1;
   } else {
+    displayTie(choice, computerChoice);
+    tie += 1; // check this, why is it saying it isn't declared???
     prompt(MESSAGES["tie"]);
   }
 }
@@ -85,7 +94,7 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
-while (true && round <= 5) {
+while ((true && round <= 5) || playerScore === 3 || computerScore === 3) {
   prompt(MESSAGES["welcome"]);
   prompt(
     `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
