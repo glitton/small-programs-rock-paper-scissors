@@ -1,4 +1,5 @@
 const readline = require("readline-sync");
+const MESSAGES = require("./game_messages.json");
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
 const WINNING_COMBOS = {
   rock: ["scissors", "lizard"],
@@ -54,21 +55,16 @@ function finalUserChoice(choice) {
 }
 
 while (true) {
-  prompt("Let's play rock paper scissors lizard spock!");
-  prompt(
-    `Choose either ${shortenedChoices.join(
-      ", "
-    )} which are equivalent to ${VALID_CHOICES.join(", ")} `
-  );
+  prompt(MESSAGES["welcome"]);
+  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  prompt(`${MESSAGES["description2"]} ${VALID_CHOICES.join(", ")}`);
+
   let choice = readline.question();
 
   while (!shortenedChoices.includes(choice)) {
-    prompt(
-      `That's not a valid choice. Choose either ${shortenedChoices.join(
-        ", "
-      )} which are equivalent to ${VALID_CHOICES.join(", ")}`
-    );
+    prompt(MESSAGES["invalidChoice"]);
     choice = readline.question();
+    console.clear();
   }
 
   finalUserChoice(choice);
@@ -79,15 +75,15 @@ while (true) {
 
   displayWinner(choice, computerChoice);
 
-  prompt("Do you want to play again?  Answer 'y' for yes or 'n' for no.");
+  prompt(MESSAGES["anotherGame"]);
   let answer = readline.question();
   while (answer[0] !== "n" && answer[0] !== "y") {
-    prompt("Please enter 'y' or 'n'");
+    prompt(MESSAGES["enterChoice"]);
     answer = readline.question();
   }
   console.clear();
   if (answer[0] !== "y") {
-    prompt("Thanks for playing, goodbye!");
+    prompt(MESSAGES["gameEnd"]);
     return false;
   }
 }
