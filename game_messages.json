@@ -4,6 +4,9 @@
   "description2": "which is the same as choosing",
   "invalidChoice": "That's not a valid choice. ",
   "enterChoice": "Please enter 'y' or 'n'",
+  "playerWins": "You win!",
+  "computerWins": "Computer wins!",
+  "tie": "It's a tie!",
   "anotherGame": "Do you want to play again?  Answer 'y' for yes or 'n' for no.",
   "gameEnd": "Thanks for playing, goodbye!"
 }

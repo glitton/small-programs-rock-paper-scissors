@@ -21,11 +21,11 @@ function displayWinner(choice, computerChoice) {
   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
 
   if (playerWins(choice, computerChoice)) {
-    prompt("You win!");
+    prompt(MESSAGES["playerWins"]);
   } else if (choice === computerChoice) {
-    prompt("It's a tie!");
+    prompt(MESSAGES["tie"]);
   } else {
-    prompt("Computer wins!");
+    prompt(MESSAGES["computerWins"]);
   }
 }
 // New array with shortened version of the valid choices
