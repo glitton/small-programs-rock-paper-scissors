@@ -1,41 +1,31 @@
 const readline = require("readline-sync");
+const MESSAGES = require("./game_messages.json");
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
+const WINNING_COMBOS = {
+  rock: ["scissors", "lizard"],
+  paper: ["rock", "spock"],
+  scissors: ["paper", "lizard"],
+  lizard: ["paper", "spock"],
+  spock: ["rock", "scissors"],
+};
 
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
+function playerWins(choice, computerChoice) {
+  return WINNING_COMBOS[choice].includes(computerChoice);
+}
+
 function displayWinner(choice, computerChoice) {
-  prompt(`You chose ${choice}, computer chose ${computerChoice}`);
-  if (
-    (choice === "rock" && computerChoice === "scissors") ||
-    (choice === "rock" && computerChoice === "lizard") ||
-    (choice === "paper" && computerChoice === "rock") ||
-    (choice === "paper" && computerChoice === "spock") ||
-    (choice === "scissors" && computerChoice === "paper") ||
-    (choice === "scissors" && computerChoice === "lizard") ||
-    (choice === "lizard" && computerChoice === "spock") ||
-    (choice === "lizard" && computerChoice === "paper") ||
-    (choice === "spock" && computerChoice === "scissors") ||
-    (choice === "spock" && computerChoice === "rock")
-  ) {
-    prompt("You win!");
-  } else if (
-    (choice === "rock" && computerChoice === "paper") ||
-    (choice === "rock" && computerChoice === "spock") ||
-    (choice === "paper" && computerChoice === "scissors") ||
-    (choice === "paper" && computerChoice === "paper") ||
-    (choice === "paper" && computerChoice === "lizard") ||
-    (choice === "scissors" && computerChoice === "rock") ||
-    (choice === "scissors" && computerChoice === "spock") ||
-    (choice === "lizard" && computerChoice === "scissors") ||
-    (choice === "lizard" && computerChoice === "rock") ||
-    (choice === "spock" && computerChoice === "paper") ||
-    (choice === "spock" && computerChoice === "lizard")
-  ) {
-    prompt("Computer wins!");
+  prompt(`You chose ${choice} while computer chose ${computerChoice}`);
+
+  if (playerWins(choice, computerChoice)) {
+    prompt(MESSAGES["playerWins"]);
+  } else if (choice === computerChoice) {
+    prompt(MESSAGES["tie"]);
   } else {
-    prompt("It's a tie!");
+    prompt(MESSAGES["computerWins"]);
   }
 }
 // New array with shortened version of the valid choices
@@ -63,28 +53,18 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
-const rounds = 0;
-const userWins = 0;
-const computerWins = 0;
 
 while (true) {
-  prompt(
-    `Let's play rock paper scissors lizard spock!\n  - This is a best of 5 game.\n  - First one to win 3 rounds is the champion!`
-  );
-  prompt(
-    `Choose either ${shortenedChoices.join(
-      ", "
-    )} which are equivalent to ${VALID_CHOICES.join(", ")} `
-  );
+  prompt(MESSAGES["welcome"]);
+  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  prompt(`${MESSAGES["description2"]} ${VALID_CHOICES.join(", ")}`);
+
   let choice = readline.question();
 
   while (!shortenedChoices.includes(choice)) {
-    prompt(
-      `That's not a valid choice. Choose either ${shortenedChoices.join(
-        ", "
-      )} which are equivalent to ${VALID_CHOICES.join(", ")}`
-    );
+    prompt(MESSAGES["invalidChoice"]);
     choice = readline.question();
+    console.clear();
   }
 
   finalUserChoice(choice);
@@ -95,15 +75,15 @@ while (true) {
 
   displayWinner(choice, computerChoice);
 
-  prompt("Do you want to play again?  Answer 'y' for yes or 'n' for no.");
+  prompt(MESSAGES["anotherGame"]);
   let answer = readline.question();
   while (answer[0] !== "n" && answer[0] !== "y") {
-    prompt("Please enter 'y' or 'n'");
+    prompt(MESSAGES["enterChoice"]);
     answer = readline.question();
   }
   console.clear();
   if (answer[0] !== "y") {
-    prompt("Thanks for playing, goodbye!");
+    prompt(MESSAGES["gameEnd"]);
     return false;
   }
 }
