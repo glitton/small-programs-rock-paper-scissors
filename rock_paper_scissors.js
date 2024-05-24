@@ -30,18 +30,19 @@ function computerWins(choice, computerChoice) {
 }
 
 function gameWinner(playerScore, computerScore) {
-  if (playerScore === 3) {
-    prompt("you win this round");
-  } else if (playerScore === computerScore) {
-    prompt("its a tie");
+  if (playerScore === 3 && round < 5) {
+    prompt("you win the game!");
+  } else if (computerScore === 3 && round < 5) {
+    prompt("computer wins the game!");
+  } else if (playerScore === computerScore && round < 5) {
+    prompt("No winner yet, on to the next round");
   } else {
-    prompt("computer wins this round");
+    prompt("No one won 3 out of five.");
   }
 }
 
-function displayWinner(choice, computerChoice) {
+function displayRoundWinner(choice, computerChoice) {
   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
-
   if (playerWins(choice, computerChoice)) {
     prompt(MESSAGES["playerWins"]);
     playerScore += 1;
@@ -84,7 +85,7 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
-while (true) {
+while (true && round <= 5) {
   prompt(MESSAGES["welcome"]);
   prompt(
     `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
@@ -109,7 +110,7 @@ while (true) {
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
 
-  displayWinner(choice, computerChoice);
+  displayRoundWinner(choice, computerChoice);
   displayRoundScores(playerScore, computerScore);
   gameWinner(playerScore, computerScore);
 
