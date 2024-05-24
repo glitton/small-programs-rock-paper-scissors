@@ -63,9 +63,14 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
+const rounds = 0;
+const userWins = 0;
+const computerWins = 0;
 
 while (true) {
-  prompt("Let's play rock paper scissors lizard spock!");
+  prompt(
+    `Let's play rock paper scissors lizard spock!\n  - This is a best of 5 game.\n  - First one to win 3 rounds is the champion!`
+  );
   prompt(
     `Choose either ${shortenedChoices.join(
       ", "

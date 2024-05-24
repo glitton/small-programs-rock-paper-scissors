@@ -1,20 +1,6 @@
 const readline = require("readline-sync");
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
 
-// function createShortenedChoices(array) {
-//   let shortenedChoices = array.map((item) => item.slice(0, 2));
-//   return shortenedChoices;
-// }
-
-// console.log(createShortenedChoices(VALID_CHOICES));
-
-let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
-
-// console.log(shortenedChoices);
-let choice = shortenedChoices.includes("li");
-
-// console.log(choice);
-
 let validUserChoice;
 function finalUserChoice(choice) {
   switch (choice) {
@@ -36,7 +22,7 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
-console.log(finalUserChoice("li"));
+// console.log(finalUserChoice("li"));
 
 // check if user entered shorter word, if entered the long word, then
 // choice will be equal to the word
