@@ -9,12 +9,34 @@ const WINNING_COMBOS = {
   spock: ["rock", "scissors"],
 };
 
+let playerScore = 0;
+let computerScore = 0;
+
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
+let round = 1;
+function displayRound() {
+  prompt(`${MESSAGES["round"]}${round}`);
+}
+
 function playerWins(choice, computerChoice) {
   return WINNING_COMBOS[choice].includes(computerChoice);
+}
+
+function computerWins(choice, computerChoice) {
+  return WINNING_COMBOS[computerChoice].includes(choice);
+}
+
+function gameWinner(playerScore, computerScore) {
+  if (playerScore === 3) {
+    prompt("you win this round");
+  } else if (playerScore === computerScore) {
+    prompt("its a tie");
+  } else {
+    prompt("computer wins this round");
+  }
 }
 
 function displayWinner(choice, computerChoice) {
@@ -22,11 +44,19 @@ function displayWinner(choice, computerChoice) {
 
   if (playerWins(choice, computerChoice)) {
     prompt(MESSAGES["playerWins"]);
-  } else if (choice === computerChoice) {
-    prompt(MESSAGES["tie"]);
-  } else {
+    playerScore += 1;
+  } else if (computerWins(choice, computerChoice)) {
     prompt(MESSAGES["computerWins"]);
+    computerScore += 1;
+  } else {
+    prompt(MESSAGES["tie"]);
   }
+}
+
+function displayRoundScores(playerScore, computerScore) {
+  prompt(
+    `Your score is ${playerScore} while the computer's score is ${computerScore}`
+  );
 }
 // New array with shortened version of the valid choices
 let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
@@ -56,8 +86,14 @@ function finalUserChoice(choice) {
 
 while (true) {
   prompt(MESSAGES["welcome"]);
-  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
-  prompt(`${MESSAGES["description2"]} ${VALID_CHOICES.join(", ")}`);
+  prompt(
+    `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
+      MESSAGES["description2"]
+    } ${VALID_CHOICES.join(", ")}.`
+  );
+  prompt(`${MESSAGES["winner"]}`);
+  displayRound();
+  round += 1; // increment until 5
 
   let choice = readline.question();
 
@@ -74,16 +110,25 @@ while (true) {
   let computerChoice = VALID_CHOICES[randomIndex];
 
   displayWinner(choice, computerChoice);
+  displayRoundScores(playerScore, computerScore);
+  gameWinner(playerScore, computerScore);
 
-  prompt(MESSAGES["anotherGame"]);
-  let answer = readline.question();
-  while (answer[0] !== "n" && answer[0] !== "y") {
+  prompt(MESSAGES["nextRound"]);
+  let nextRoundAnswer = readline.question();
+  while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
     prompt(MESSAGES["enterChoice"]);
-    answer = readline.question();
+    nextRoundAnswer = readline.question();
   }
+
+  // prompt(MESSAGES["anotherGame"]);
+  // let answer = readline.question();
+  // while (answer[0] !== "n" && answer[0] !== "y") {
+  //   prompt(MESSAGES["enterChoice"]);
+  //   answer = readline.question();
+  // }
   console.clear();
-  if (answer[0] !== "y") {
-    prompt(MESSAGES["gameEnd"]);
-    return false;
-  }
+  // if (answer[0] !== "y") {
+  //   prompt(MESSAGES["gameEnd"]);
+  //   return false;
+  // }
 }
