@@ -5,37 +5,28 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function displayWinner(choice, computerChoice) {
-  prompt(`You chose ${choice}, computer chose ${computerChoice}`);
-  if (
+function playerWins(choice, computerChoice) {
+  return (
     (choice === "rock" && computerChoice === "scissors") ||
     (choice === "rock" && computerChoice === "lizard") ||
     (choice === "paper" && computerChoice === "rock") ||
     (choice === "paper" && computerChoice === "spock") ||
     (choice === "scissors" && computerChoice === "paper") ||
     (choice === "scissors" && computerChoice === "lizard") ||
-    (choice === "lizard" && computerChoice === "spock") ||
     (choice === "lizard" && computerChoice === "paper") ||
-    (choice === "spock" && computerChoice === "scissors") ||
-    (choice === "spock" && computerChoice === "rock")
-  ) {
+    (choice === "lizard" && computerChoice === "spock") ||
+    (choice === "spock" && computerChoice === "rock") ||
+    (choice === "spock" && computerChoice === "scissors")
+  );
+}
+
+function displayWinner(choice, computerChoice) {
+  if (playerWins(choice, computerChoice)) {
     prompt("You win!");
-  } else if (
-    (choice === "rock" && computerChoice === "paper") ||
-    (choice === "rock" && computerChoice === "spock") ||
-    (choice === "paper" && computerChoice === "scissors") ||
-    (choice === "paper" && computerChoice === "paper") ||
-    (choice === "paper" && computerChoice === "lizard") ||
-    (choice === "scissors" && computerChoice === "rock") ||
-    (choice === "scissors" && computerChoice === "spock") ||
-    (choice === "lizard" && computerChoice === "scissors") ||
-    (choice === "lizard" && computerChoice === "rock") ||
-    (choice === "spock" && computerChoice === "paper") ||
-    (choice === "spock" && computerChoice === "lizard")
-  ) {
-    prompt("Computer wins!");
-  } else {
+  } else if (choice === computerChoice) {
     prompt("It's a tie!");
+  } else {
+    prompt("Computer wins!");
   }
 }
 // New array with shortened version of the valid choices
