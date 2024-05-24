@@ -17,6 +17,8 @@ function playerWins(choice, computerChoice) {
 }
 
 function displayWinner(choice, computerChoice) {
+  prompt(`You chose ${choice} while computer chose ${computerChoice}`);
+
   if (playerWins(choice, computerChoice)) {
     prompt("You win!");
   } else if (choice === computerChoice) {
