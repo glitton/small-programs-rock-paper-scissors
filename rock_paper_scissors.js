@@ -94,7 +94,7 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
-while ((true && round <= 5) || playerScore === 3 || computerScore === 3) {
+while (round <= 5 || playerScore === 3 || computerScore === 3) {
   prompt(MESSAGES["welcome"]);
   prompt(
     `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
