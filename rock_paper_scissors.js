@@ -139,16 +139,16 @@ while (round <= 5 || playerScore === 3 || computerScore === 3) {
     prompt(MESSAGES["enterChoice"]);
     nextRoundAnswer = readline.question();
   }
-
-  // prompt(MESSAGES["anotherGame"]);
-  // let answer = readline.question();
-  // while (answer[0] !== "n" && answer[0] !== "y") {
-  //   prompt(MESSAGES["enterChoice"]);
-  //   answer = readline.question();
-  // }
   console.clear();
-  // if (answer[0] !== "y") {
-  //   prompt(MESSAGES["gameEnd"]);
-  //   return false;
-  // }
+  // move to a function using while or switch so you can break early?
+  if (round !== 5 && nextRoundAnswer[0] !== "y") {
+    prompt(MESSAGES["exitEarly"]);
+    nextRoundAnswer = readline.question();
+    if (nextRoundAnswer[0] === "y") {
+      prompt(MESSAGES["gameEnd"]);
+    } else if (nextRoundAnswer[0] === "c") {
+      continue;
+    }
+    return false;
+  }
 }
