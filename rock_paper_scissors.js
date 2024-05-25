@@ -95,7 +95,9 @@ function showGameWinner(playerScore, computerScore) {
   }
 }
 
-while (round <= 5 || playerScore === 3 || computerScore === 3) {
+// function endGame(playerScore, computerScore, round) {}
+
+while (round !== 5) {
   prompt(MESSAGES["welcome"]);
   prompt(`${MESSAGES["winner"]}`);
   displayRound();
