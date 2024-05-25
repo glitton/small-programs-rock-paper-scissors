@@ -90,12 +90,10 @@ function showGameWinner(playerScore, computerScore) {
     prompt("computer wins the game!");
   } else if (playerScore === computerScore && round < 5) {
     prompt("No winner yet, on to the next round.");
-  } else if (playerScore === computerScore && round === 5) {
+  } else if (playerScore === computerScore && round > 5) {
     prompt("Game over, no one won three out of five!");
   }
 }
-
-// function endGame(playerScore, computerScore, round) {}
 
 while (round <= TOTAL_ROUNDS) {
   prompt(MESSAGES["welcome"]);
@@ -125,6 +123,23 @@ while (round <= TOTAL_ROUNDS) {
   displayRoundWinner(choice, computerChoice);
   displayRoundScores(playerScore, computerScore);
   showGameWinner(playerScore, computerScore);
+
+  if (round === 6) {
+    showGameWinner(playerScore, computerScore);
+    prompt(MESSAGES["anotherGame"]);
+    let playAgainAnswer = readline.question();
+    console.clear();
+
+    while (!["y", "n"].includes(playAgainAnswer)) {
+      prompt(MESSAGES["invalidChoice"]);
+      playAgainAnswer = readline.question();
+      console.clear();
+    }
+    if (playAgainAnswer !== "y") {
+      console.clear();
+      break;
+    }
+  }
 
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
