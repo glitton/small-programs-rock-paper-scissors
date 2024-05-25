@@ -2,7 +2,7 @@
   "welcome": "Let's play rock paper scissors lizard spock! This is a best of five game!",
   "description1": "To play the game, choose either",
   "description2": "which is the same as choosing",
-  "winner": "First one to win 3 out of 5 games is the champion!",
+  "winner": "First one to win 3 out of 5 rounds is the champion!",
   "round": "Let's play round ",
   "invalidChoice": "That's not a valid choice. ",
   "enterChoice": "Please enter 'y' or 'n'",

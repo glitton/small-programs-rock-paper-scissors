@@ -1,5 +1,6 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
+const TOTAL_ROUNDS = 5;
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
 const WINNING_COMBOS = {
   rock: ["scissors", "lizard"],
@@ -19,7 +20,7 @@ function prompt(message) {
 
 let round = 1;
 function displayRound() {
-  prompt(`${MESSAGES["round"]}${round}`);
+  prompt(`${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS}`);
 }
 
 function playerWins(choice, computerChoice) {
@@ -34,18 +35,6 @@ function displayTie(choice, computerChoice) {
   return (
     playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
   );
-}
-// FIX this , not sure it works yet
-function gameWinner(playerScore, computerScore) {
-  if (playerScore === 3 && round < 5) {
-    prompt("you win the game!");
-  } else if (computerScore === 3 && round < 5) {
-    prompt("computer wins the game!");
-  } else if (playerScore === computerScore && round < 5) {
-    prompt("No winner yet, on to the next round");
-  } else if (playerScore === computerScore && round === 5) {
-    prompt("No one won three out of five.");
-  }
 }
 
 function displayRoundWinner(choice, computerChoice) {
@@ -94,16 +83,36 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
+// function playFinalRound(round) {
+//   if (round === 5) {
+//     prompt(`This is the final round!`);
+//     gameWinner(playerScore, computerScore);
+//   }
+// }
+
+// FIX this , not sure it works yet
+function determineGameWinner(playerScore, computerScore) {
+  if (playerScore === 3 && round < 5) {
+    prompt("you win the game!");
+  } else if (computerScore === 3 && round < 5) {
+    prompt("computer wins the game!");
+  } else if (playerScore === computerScore && round < 5) {
+    prompt("No winner yet, on to the next round");
+  } else if (playerScore === computerScore && round === 5) {
+    prompt("No one won three out of five.");
+  }
+}
+
 while (round <= 5 || playerScore === 3 || computerScore === 3) {
   prompt(MESSAGES["welcome"]);
+  prompt(`${MESSAGES["winner"]}`);
+  displayRound();
+  round += 1; // increment until 5
   prompt(
     `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
       MESSAGES["description2"]
     } ${VALID_CHOICES.join(", ")}.`
   );
-  prompt(`${MESSAGES["winner"]}`);
-  displayRound();
-  round += 1; // increment until 5
 
   let choice = readline.question();
 
@@ -121,7 +130,8 @@ while (round <= 5 || playerScore === 3 || computerScore === 3) {
 
   displayRoundWinner(choice, computerChoice);
   displayRoundScores(playerScore, computerScore);
-  gameWinner(playerScore, computerScore);
+  // playFinalRound(round);
+  determineGameWinner(playerScore, computerScore);
 
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
