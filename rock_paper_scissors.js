@@ -83,23 +83,15 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
-// function playFinalRound(round) {
-//   if (round === 5) {
-//     prompt(`This is the final round!`);
-//     gameWinner(playerScore, computerScore);
-//   }
-// }
-
-// FIX this , not sure it works yet
-function determineGameWinner(playerScore, computerScore) {
-  if (playerScore === 3 && round < 5) {
+function showGameWinner(playerScore, computerScore) {
+  if (playerScore === 3 && round <= 5) {
     prompt("you win the game!");
-  } else if (computerScore === 3 && round < 5) {
+  } else if (computerScore === 3 && round <= 5) {
     prompt("computer wins the game!");
   } else if (playerScore === computerScore && round < 5) {
-    prompt("No winner yet, on to the next round");
+    prompt("No winner yet, on to the next round.");
   } else if (playerScore === computerScore && round === 5) {
-    prompt("No one won three out of five.");
+    prompt("Game over, no one won three out of five!");
   }
 }
 
@@ -130,8 +122,7 @@ while (round <= 5 || playerScore === 3 || computerScore === 3) {
 
   displayRoundWinner(choice, computerChoice);
   displayRoundScores(playerScore, computerScore);
-  // playFinalRound(round);
-  determineGameWinner(playerScore, computerScore);
+  showGameWinner(playerScore, computerScore);
 
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
