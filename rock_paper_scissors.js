@@ -84,11 +84,11 @@ function finalUserChoice(choice) {
 
 function showGameWinner(playerScore, computerScore) {
   if (playerScore === 3 && round <= 5) {
-    prompt("you win the game!");
+    prompt(MESSAGES["playerWins"]);
   } else if (computerScore === 3 && round <= 5) {
-    prompt("computer wins the game!");
+    prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round > 5) {
-    prompt("Game over, no one won three out of five!");
+    prompt(MESSAGES["gameOver"]);
   }
 }
 
