@@ -159,6 +159,7 @@ while (round <= TOTAL_ROUNDS) {
     }
     if (playAgainAnswer !== "y") {
       console.clear();
+      prompt(MESSAGES["gameEnd"]);
       break;
     }
   }
