@@ -6,12 +6,15 @@
   "round": "LET'S PLAY ROUND ",
   "invalidChoice": "That's not a valid choice.",
   "enterChoice": "Please enter 'y' or 'n'",
-  "playerWins": "You win the game!",
-  "computerWins": "Computer wins the game!",
+  "playerWinsRound": "You win round ",
+  "playerWins": "You win the game, congratulations!",
+  "computerWins": "Computer wins the game, congratulations!",
+  "computerWinsRound": "Computer wins round ",
   "tie": "It's a tie!",
+  "tieRound": "It's a tie for round ",
   "gameOver": "Game over, no one won three out of five!",
   "nextRound": "Ready for the next round? Answer 'y' for yes or 'n' for no.",
-  "anotherGame": "Do you want to play again?  Answer 'y' for yes or 'n' for no.",
+  "anotherGame": "Do you want to play another best of five?  Answer 'y' for yes or 'n' for no.",
   "exitEarly": "To end the game press 'y' to continue press 'c'.",
   "gameEnd": "Thanks for playing, goodbye!"
 }
