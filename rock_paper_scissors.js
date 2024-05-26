@@ -87,7 +87,7 @@ function showGameWinner(playerScore, computerScore) {
     prompt(MESSAGES["playerWins"]);
   } else if (computerScore === 3 && round <= 5) {
     prompt(MESSAGES["computerWins"]);
-  } else if (playerScore === computerScore && round > 5) {
+  } else if (playerScore === computerScore && round === 5) {
     prompt(MESSAGES["gameOver"]);
   }
 }
@@ -120,8 +120,7 @@ while (round <= TOTAL_ROUNDS) {
   if (round > 1) {
     displayRoundScores(playerScore, computerScore);
   }
-
-  round += 1; // increment until 5
+  round += 1;
   prompt(
     `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
       MESSAGES["description2"]
@@ -144,8 +143,17 @@ while (round <= TOTAL_ROUNDS) {
 
   displayRoundWinner(choice, computerChoice);
   displayRoundScores(playerScore, computerScore);
-  showGameWinner(playerScore, computerScore);
+  // showGameWinner(playerScore, computerScore);
 
+  prompt(MESSAGES["nextRound"]);
+  let nextRoundAnswer = readline.question();
+  while (nextRoundAnswer !== "n" && nextRoundAnswer !== "y") {
+    prompt(MESSAGES["enterChoice"]);
+    nextRoundAnswer = readline.question();
+  }
+  console.clear();
+
+  // TO DO: Think about this
   if (round === 6) {
     showGameWinner(playerScore, computerScore);
     prompt(MESSAGES["anotherGame"]);
@@ -164,15 +172,6 @@ while (round <= TOTAL_ROUNDS) {
     }
   }
 
-  // playFinalRound(round, playerScore, computerScore);
-
-  prompt(MESSAGES["nextRound"]);
-  let nextRoundAnswer = readline.question();
-  while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
-    prompt(MESSAGES["enterChoice"]);
-    nextRoundAnswer = readline.question();
-  }
-  console.clear();
   // move to a function using while or switch so you can break early?
   if (round !== 5 && nextRoundAnswer[0] !== "y") {
     prompt(MESSAGES["exitEarly"]);
