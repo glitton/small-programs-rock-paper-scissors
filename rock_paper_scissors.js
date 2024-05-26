@@ -152,7 +152,14 @@ while (round <= TOTAL_ROUNDS) {
 
   round += 1;
 
-  // TO DO: Think about this
+  prompt(MESSAGES["nextRound"]);
+  let nextRoundAnswer = readline.question();
+  while (nextRoundAnswer !== "n" && nextRoundAnswer !== "y") {
+    prompt(MESSAGES["enterChoice"]);
+    nextRoundAnswer = readline.question();
+  }
+  console.clear();
+
   if (round === 6) {
     showGameWinner(playerScore, computerScore);
 
@@ -171,14 +178,6 @@ while (round <= TOTAL_ROUNDS) {
       break;
     }
   }
-
-  prompt(MESSAGES["nextRound"]);
-  let nextRoundAnswer = readline.question();
-  while (nextRoundAnswer !== "n" && nextRoundAnswer !== "y") {
-    prompt(MESSAGES["enterChoice"]);
-    nextRoundAnswer = readline.question();
-  }
-  console.clear();
 
   // move to a function using while or switch so you can break early?
   if (round !== 5 && nextRoundAnswer[0] !== "y") {
