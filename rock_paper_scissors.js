@@ -103,7 +103,7 @@ prompt(
 
 /* ---------- GAME STARTS HERE ---------- */
 
-while (round !== TOTAL_ROUNDS) {
+while (round !== TOTAL_ROUNDS || playerScore === 3 || computerScore === 3) {
   displayRound();
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
