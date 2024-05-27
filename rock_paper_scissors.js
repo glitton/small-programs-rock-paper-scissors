@@ -84,7 +84,7 @@ function finalUserChoice(choice) {
   }
   return userChoice;
 }
-// Not sure if this is the right logic ...
+// Not sure if this is the right logic
 function showGameWinner(playerScore, computerScore) {
   if (playerScore >= 3 && round <= 5) {
     prompt(MESSAGES["playerWins"]);
@@ -162,18 +162,18 @@ while (true) {
 //round = 5
 //Play final round, gets out of the while loop
 
-showGameWinner(playerScore, computerScore);
+// showGameWinner(playerScore, computerScore);
 
-prompt(MESSAGES["anotherGame"]);
-let playAgainAnswer = readline.question();
-console.clear();
+// prompt(MESSAGES["anotherGame"]);
+// let playAgainAnswer = readline.question();
+// console.clear();
 
-while (!["y", "n"].includes(playAgainAnswer)) {
-  prompt(MESSAGES["invalidChoice"]);
-  playAgainAnswer = readline.question();
-  console.clear();
-}
-if (playAgainAnswer !== "y") {
-  console.clear();
-  prompt(MESSAGES["gameEnd"]);
-}
+// while (!["y", "n"].includes(playAgainAnswer)) {
+//   prompt(MESSAGES["invalidChoice"]);
+//   playAgainAnswer = readline.question();
+//   console.clear();
+// }
+// if (playAgainAnswer !== "y") {
+//   console.clear();
+//   prompt(MESSAGES["gameEnd"]);
+// }
