@@ -82,7 +82,7 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
-
+// This needs fixing, game doesn't end after prompts
 function showGameWinner(playerScore, computerScore, round) {
   if (playerScore >= 3 && round <= 5) {
     prompt(MESSAGES["playerWins"]);
