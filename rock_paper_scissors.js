@@ -138,6 +138,26 @@ while (true) {
   // if round is less than or equal to 5 and there is a winner,
   //it prompts for the next round
 
+  // TO DO: Think about this
+  if (round === 6) {
+    showGameWinner(playerScore, computerScore);
+
+    prompt(MESSAGES["anotherGame"]);
+    let playAgainAnswer = readline.question();
+    console.clear();
+
+    while (!["y", "n"].includes(playAgainAnswer)) {
+      prompt(MESSAGES["invalidChoice"]);
+      playAgainAnswer = readline.question();
+      console.clear();
+    }
+    if (playAgainAnswer !== "y") {
+      console.clear();
+      prompt(MESSAGES["gameEnd"]);
+      break;
+    }
+  }
+
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
   while (nextRoundAnswer !== "n" && nextRoundAnswer !== "y") {
