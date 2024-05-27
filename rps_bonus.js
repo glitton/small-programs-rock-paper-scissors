@@ -144,7 +144,7 @@ while (true) {
     if (playAgainAnswer !== "y") {
       console.clear();
       prompt(MESSAGES["gameEnd"]);
-      return;
+      break;
     }
   } else {
     prompt(MESSAGES["nextRound"]);
