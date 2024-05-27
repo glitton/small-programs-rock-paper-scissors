@@ -13,14 +13,16 @@ const WINNING_COMBOS = {
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
+let round = 1;
 
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-let round = 1;
 function displayRound() {
-  prompt(`${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS}`);
+  prompt(
+    `*-----------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *-----------* `
+  );
 }
 
 function playerWins(choice, computerChoice) {
@@ -37,30 +39,28 @@ function displayTie(choice, computerChoice) {
   );
 }
 
-function displayRoundWinner(choice, computerChoice) {
+function displayRoundWinner(choice, computerChoice, round) {
   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
   if (playerWins(choice, computerChoice)) {
-    prompt(MESSAGES["playerWins"]);
     playerScore += 1;
+    prompt(`${MESSAGES["playerWinsRound"]}${round}`);
   } else if (computerWins(choice, computerChoice)) {
-    prompt(MESSAGES["computerWins"]);
     computerScore += 1;
+    prompt(`${MESSAGES["computerWinsRound"]}${round}`);
   } else {
     displayTie(choice, computerChoice);
-    tie += 1; // check this, why is it saying it isn't declared???
-    prompt(MESSAGES["tie"]);
+    tie += 1;
+    prompt(`${MESSAGES["tieRound"]}${round}`);
   }
 }
 
-function displayRoundScores(playerScore, computerScore) {
+function displayRoundScores(playerScore, computerScore, tie) {
   prompt(
-    `Your score is ${playerScore} while the computer's score is ${computerScore}`
+    `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
   );
 }
-// New array with shortened version of the valid choices
-let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
 
-//function to convert shortened choices back to real words
+let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
 let validUserChoice;
 function finalUserChoice(choice) {
   switch (choice) {
@@ -83,30 +83,33 @@ function finalUserChoice(choice) {
   return validUserChoice;
 }
 
-function showGameWinner(playerScore, computerScore) {
-  if (playerScore === 3 && round <= 5) {
-    prompt("you win the game!");
-  } else if (computerScore === 3 && round <= 5) {
-    prompt("computer wins the game!");
-  } else if (playerScore === computerScore && round < 5) {
-    prompt("No winner yet, on to the next round.");
+function showGameWinner(playerScore, computerScore, round) {
+  if (playerScore >= 3 && round <= 5) {
+    prompt(MESSAGES["playerWins"]);
+  } else if (computerScore >= 3 && round <= 5) {
+    prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === 5) {
-    prompt("Game over, no one won three out of five!");
+    prompt(MESSAGES["gameOver"]);
   }
 }
 
-// function endGame(playerScore, computerScore, round) {}
+prompt(MESSAGES["welcome"]);
+prompt(`${MESSAGES["winner"]}`);
+prompt(
+  `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
+    MESSAGES["description2"]
+  } ${VALID_CHOICES.join(", ")}.`
+);
 
-while (round <= TOTAL_ROUNDS) {
-  prompt(MESSAGES["welcome"]);
-  prompt(`${MESSAGES["winner"]}`);
+/* ---------- GAME STARTS HERE ---------- */
+
+while (round < TOTAL_ROUNDS) {
   displayRound();
-  round += 1; // increment until 5
-  prompt(
-    `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
-      MESSAGES["description2"]
-    } ${VALID_CHOICES.join(", ")}.`
-  );
+  if (round > 1) {
+    displayRoundScores(playerScore, computerScore, tie);
+  }
+
+  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
 
   let choice = readline.question();
 
@@ -122,9 +125,9 @@ while (round <= TOTAL_ROUNDS) {
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
 
-  displayRoundWinner(choice, computerChoice);
-  displayRoundScores(playerScore, computerScore);
-  showGameWinner(playerScore, computerScore);
+  displayRoundWinner(choice, computerChoice, round);
+  displayRoundScores(playerScore, computerScore, tie);
+  showGameWinner(playerScore, computerScore, round);
 
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
@@ -144,4 +147,5 @@ while (round <= TOTAL_ROUNDS) {
     }
     return false;
   }
+  round += 1; // increment until 5
 }
