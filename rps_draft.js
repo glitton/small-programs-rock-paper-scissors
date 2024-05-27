@@ -91,6 +91,8 @@ function showGameWinner(playerScore, computerScore, round) {
     prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === 5) {
     prompt(MESSAGES["gameOver"]);
+  } else {
+    prompt(MESSAGES["gameOver"]);
   }
 }
 
@@ -130,11 +132,16 @@ while (true) {
   displayRoundScores(playerScore, computerScore, tie);
 
   let nextRoundAnswer;
-  if (
-    round === TOTAL_ROUNDS ||
-    playerScore === WINNING_SCORE ||
-    computerScore === WINNING_SCORE
-  ) {
+  if (playerScore !== WINNING_SCORE || computerScore !== WINNING_SCORE) {
+    showGameWinner(playerScore, computerScore, round);
+    prompt(MESSAGES["nextRound"]);
+    nextRoundAnswer = readline.question();
+    while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
+      prompt(MESSAGES["enterChoice"]);
+      nextRoundAnswer = readline.question();
+    }
+    console.clear();
+  } else {
     showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["anotherGame"]);
     let playAgainAnswer = readline.question();
@@ -151,15 +158,6 @@ while (true) {
       break;
     }
   }
-
-  showGameWinner(playerScore, computerScore, round);
-  prompt(MESSAGES["nextRound"]);
-  nextRoundAnswer = readline.question();
-  while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
-    prompt(MESSAGES["enterChoice"]);
-    nextRoundAnswer = readline.question();
-  }
-  console.clear();
 
   if (round !== TOTAL_ROUNDS && nextRoundAnswer[0] !== "y") {
     prompt(MESSAGES["exitEarly"]);
