@@ -103,7 +103,7 @@ prompt(
 
 /* ---------- GAME STARTS HERE ---------- */
 
-while (round < TOTAL_ROUNDS) {
+while (round < TOTAL_ROUNDS + 1) {
   displayRound();
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
@@ -148,4 +148,21 @@ while (round < TOTAL_ROUNDS) {
     return false;
   }
   round += 1; // increment until 5
+}
+//Play final round, gets out of the while loop
+
+showGameWinner(playerScore, computerScore, round);
+
+prompt(MESSAGES["anotherGame"]);
+let playAgainAnswer = readline.question();
+console.clear();
+
+while (!["y", "n"].includes(playAgainAnswer)) {
+  prompt(MESSAGES["invalidChoice"]);
+  playAgainAnswer = readline.question();
+  console.clear();
+}
+if (playAgainAnswer !== "y") {
+  console.clear();
+  prompt(MESSAGES["gameEnd"]);
 }
