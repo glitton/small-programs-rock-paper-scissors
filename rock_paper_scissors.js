@@ -40,18 +40,18 @@ function displayTie(choice, computerChoice) {
 function displayRoundWinner(choice, computerChoice, round) {
   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
   if (playerWins(choice, computerChoice)) {
-    prompt(`${MESSAGES["playerWinsRound"]}${round}`);
     playerScore += 1;
-    return playerScore;
+    prompt(`${MESSAGES["playerWinsRound"]}${round}`);
+    // return playerScore;
   } else if (computerWins(choice, computerChoice)) {
-    prompt(`${MESSAGES["computerWinsRound"]}${round}`);
     computerScore += 1;
-    return computerScore;
+    prompt(`${MESSAGES["computerWinsRound"]}${round}`);
+    // return computerScore;
   } else {
     displayTie(choice, computerChoice);
     tie += 1;
     prompt(`${MESSAGES["tieRound"]}${round}`);
-    return tie;
+    // return tie;
   }
 }
 
@@ -63,49 +63,50 @@ function displayRoundScores(playerScore, computerScore, tie) {
 }
 
 let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
-
-let validUserChoice;
+let userChoice;
 function finalUserChoice(choice) {
   switch (choice) {
     case "ro":
-      validUserChoice = "rock";
+      userChoice = "rock";
       break;
     case "pa":
-      validUserChoice = "paper";
+      userChoice = "paper";
       break;
     case "sc":
-      validUserChoice = "scissors";
+      userChoice = "scissors";
       break;
     case "li":
-      validUserChoice = "lizard";
+      userChoice = "lizard";
       break;
     case "sp":
-      validUserChoice = "spock";
+      userChoice = "spock";
       break;
   }
-  return validUserChoice;
+  return userChoice;
 }
-// Does this function ever get called??
+// Not sure if this is the right logic ...
 function showGameWinner(playerScore, computerScore) {
-  let winnerScore = 0;
-  if (playerScore === 3 && round <= 5) {
+  if (playerScore >= 3 && round <= 5) {
     prompt(MESSAGES["playerWins"]);
-    winnerScore = playerScore;
-  } else if (computerScore === 3 && round <= 5) {
+    return true;
+  } else if (computerScore >= 3 && round <= 5) {
     prompt(MESSAGES["computerWins"]);
-    winnerScore = computerScore;
+    return true;
   } else if (playerScore === computerScore && round === 5) {
     prompt(MESSAGES["gameOver"]);
-    winnerScore = 0;
+    return true;
+  } else {
+    prompt(MESSAGES["gameOver"]);
+    return false;
   }
-  return winnerScore;
 }
 
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["winner"]}`);
 
-// GAME STARTS HERE
-while (round < TOTAL_ROUNDS) {
+/* ----------GAME STARTS HERE ------------ */
+
+while (true) {
   displayRound();
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
@@ -126,7 +127,7 @@ while (round < TOTAL_ROUNDS) {
   }
 
   finalUserChoice(choice);
-  choice = validUserChoice;
+  choice = userChoice;
 
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
@@ -136,8 +137,6 @@ while (round < TOTAL_ROUNDS) {
   showGameWinner(playerScore, computerScore);
   // if round is less than or equal to 5 and there is a winner,
   //it prompts for the next round
-
-  round += 1;
 
   prompt(MESSAGES["nextRound"]);
   let nextRoundAnswer = readline.question();
@@ -158,6 +157,7 @@ while (round < TOTAL_ROUNDS) {
     }
     return false;
   }
+  round += 1;
 }
 //round = 5
 //Play final round, gets out of the while loop
