@@ -173,5 +173,9 @@ while (true) {
     break;
   }
 
-  round += 1;
+  if (round !== TOTAL_ROUNDS) {
+    round += 1;
+  } else {
+    return round;
+  }
 }
