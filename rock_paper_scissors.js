@@ -85,19 +85,15 @@ function finalUserChoice(choice) {
   return userChoice;
 }
 // Not sure if this is the right logic
-function showGameWinner(playerScore, computerScore) {
+function showGameWinner(playerScore, computerScore, round) {
   if (playerScore >= 3 && round <= 5) {
     prompt(MESSAGES["playerWins"]);
-    return true;
   } else if (computerScore >= 3 && round <= 5) {
     prompt(MESSAGES["computerWins"]);
-    return true;
   } else if (playerScore === computerScore && round === 5) {
     prompt(MESSAGES["gameOver"]);
-    return true;
   } else {
     prompt(MESSAGES["gameOver"]);
-    return false;
   }
 }
 
@@ -106,7 +102,7 @@ prompt(`${MESSAGES["winner"]}`);
 
 /* ----------GAME STARTS HERE ------------ */
 
-while (true) {
+while (round <= TOTAL_ROUNDS) {
   displayRound();
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
@@ -134,13 +130,13 @@ while (true) {
 
   displayRoundWinner(choice, computerChoice, round);
   displayRoundScores(playerScore, computerScore, tie);
-  showGameWinner(playerScore, computerScore);
+  showGameWinner(playerScore, computerScore, round);
   // if round is less than or equal to 5 and there is a winner,
   //it prompts for the next round
 
   // TO DO: Think about this
   if (round === 6) {
-    showGameWinner(playerScore, computerScore);
+    showGameWinner(playerScore, computerScore, round);
 
     prompt(MESSAGES["anotherGame"]);
     let playAgainAnswer = readline.question();
@@ -182,7 +178,7 @@ while (true) {
 //round = 5
 //Play final round, gets out of the while loop
 
-// showGameWinner(playerScore, computerScore);
+// showGameWinner(playerScore, computerScore, round);
 
 // prompt(MESSAGES["anotherGame"]);
 // let playAgainAnswer = readline.question();
