@@ -42,19 +42,23 @@ function displayRoundWinner(choice, computerChoice, round) {
   if (playerWins(choice, computerChoice)) {
     prompt(`${MESSAGES["playerWinsRound"]}${round}`);
     playerScore += 1;
+    return playerScore;
   } else if (computerWins(choice, computerChoice)) {
     prompt(`${MESSAGES["computerWinsRound"]}${round}`);
     computerScore += 1;
+    return computerScore;
   } else {
     displayTie(choice, computerChoice);
     tie += 1;
     prompt(`${MESSAGES["tieRound"]}${round}`);
+    return tie;
   }
 }
 
-function displayRoundScores(playerScore, computerScore) {
+function displayRoundScores(playerScore, computerScore, tie) {
+  // displayRoundWinner(choice, computerChoice, round);
   prompt(
-    `Your score is ${playerScore} while the computer's score is ${computerScore}`
+    `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
   );
 }
 
@@ -97,33 +101,14 @@ function showGameWinner(playerScore, computerScore) {
   return winnerScore;
 }
 
-// function playFinalRound(round, playerScore, computerScore) {
-//   while (round !== 6) {
-//     showGameWinner(playerScore, computerScore);
-//     prompt(MESSAGES["anotherGame"]);
-//     let playAgainAnswer = readline.question();
-//     console.clear();
-
-//     while (!["y", "n"].includes(playAgainAnswer)) {
-//       prompt(MESSAGES["invalidChoice"]);
-//       playAgainAnswer = readline.question();
-//       console.clear();
-//     }
-//     if (playAgainAnswer !== "y") {
-//       console.clear();
-//       break;
-//     }
-//   }
-// }
-
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["winner"]}`);
 
 // GAME STARTS HERE
-while (round <= TOTAL_ROUNDS) {
+while (round < TOTAL_ROUNDS) {
   displayRound();
   if (round > 1) {
-    displayRoundScores(playerScore, computerScore);
+    displayRoundScores(playerScore, computerScore, tie);
   }
 
   prompt(
@@ -147,8 +132,10 @@ while (round <= TOTAL_ROUNDS) {
   let computerChoice = VALID_CHOICES[randomIndex];
 
   displayRoundWinner(choice, computerChoice, round);
-  displayRoundScores(playerScore, computerScore);
+  displayRoundScores(playerScore, computerScore, tie);
   showGameWinner(playerScore, computerScore);
+  // if round is less than or equal to 5 and there is a winner,
+  //it prompts for the next round
 
   round += 1;
 
@@ -160,27 +147,8 @@ while (round <= TOTAL_ROUNDS) {
   }
   console.clear();
 
-  if (round === 6) {
-    showGameWinner(playerScore, computerScore);
-
-    prompt(MESSAGES["anotherGame"]);
-    let playAgainAnswer = readline.question();
-    console.clear();
-
-    while (!["y", "n"].includes(playAgainAnswer)) {
-      prompt(MESSAGES["invalidChoice"]);
-      playAgainAnswer = readline.question();
-      console.clear();
-    }
-    if (playAgainAnswer !== "y") {
-      console.clear();
-      prompt(MESSAGES["gameEnd"]);
-      break;
-    }
-  }
-
   // move to a function using while or switch so you can break early?
-  if (round !== 5 && nextRoundAnswer[0] !== "y") {
+  if (nextRoundAnswer[0] !== "y") {
     prompt(MESSAGES["exitEarly"]);
     nextRoundAnswer = readline.question();
     if (nextRoundAnswer[0] === "y") {
@@ -190,4 +158,22 @@ while (round <= TOTAL_ROUNDS) {
     }
     return false;
   }
+}
+//round = 5
+//Play final round, gets out of the while loop
+
+showGameWinner(playerScore, computerScore);
+
+prompt(MESSAGES["anotherGame"]);
+let playAgainAnswer = readline.question();
+console.clear();
+
+while (!["y", "n"].includes(playAgainAnswer)) {
+  prompt(MESSAGES["invalidChoice"]);
+  playAgainAnswer = readline.question();
+  console.clear();
+}
+if (playAgainAnswer !== "y") {
+  console.clear();
+  prompt(MESSAGES["gameEnd"]);
 }
