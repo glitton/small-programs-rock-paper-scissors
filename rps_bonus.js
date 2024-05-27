@@ -1,6 +1,7 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
 const TOTAL_ROUNDS = 5;
+const WINNING_SCORE = 3;
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
 const WINNING_COMBOS = {
   rock: ["scissors", "lizard"],
@@ -82,7 +83,7 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
-// This needs fixing, game doesn't end after prompts
+
 function showGameWinner(playerScore, computerScore, round) {
   if (playerScore >= 3 && round <= 5) {
     prompt(MESSAGES["playerWins"]);
@@ -127,9 +128,8 @@ while (true) {
 
   displayRoundWinner(choice, computerChoice, round);
   displayRoundScores(playerScore, computerScore, tie);
-  showGameWinner(playerScore, computerScore, round);
-  let nextRoundAnswer;
 
+  let nextRoundAnswer;
   if (round === 5 || playerScore === 3 || computerScore === 3) {
     showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["anotherGame"]);
@@ -145,8 +145,9 @@ while (true) {
       console.clear();
       prompt(MESSAGES["gameEnd"]);
       break;
-    }
+    } // figure out how to repeat a new game
   } else {
+    showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["nextRound"]);
     nextRoundAnswer = readline.question();
     while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
