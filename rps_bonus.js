@@ -130,7 +130,11 @@ while (true) {
   displayRoundScores(playerScore, computerScore, tie);
 
   let nextRoundAnswer;
-  if (round === 5 || playerScore === 3 || computerScore === 3) {
+  if (
+    round === TOTAL_ROUNDS ||
+    playerScore === WINNING_SCORE ||
+    computerScore === WINNING_SCORE
+  ) {
     showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["anotherGame"]);
     let playAgainAnswer = readline.question();
