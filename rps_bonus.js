@@ -159,12 +159,17 @@ while (true) {
     showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["nextRound"]);
     nextRoundAnswer = readline.question();
-    while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
+    while (!["y"].includes(nextRoundAnswer)) {
       prompt(MESSAGES["enterChoice"]);
       nextRoundAnswer = readline.question();
     }
-    console.clear();
   }
+
+  if (nextRoundAnswer !== "y") {
+    prompt(MESSAGES["exitEarly"]);
+    nextRoundAnswer = readline.question();
+  }
+  console.clear();
 
   round += 1;
 }
