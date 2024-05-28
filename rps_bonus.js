@@ -131,18 +131,6 @@ while (true) {
   showGameWinner(playerScore, computerScore, round);
 
   let nextRoundAnswer;
-  prompt(MESSAGES["nextRound"]);
-  nextRoundAnswer = readline.question();
-  while (!["y"].includes(nextRoundAnswer)) {
-    prompt(MESSAGES["enterChoice"]);
-    nextRoundAnswer = readline.question();
-  }
-
-  if (nextRoundAnswer !== "y") {
-    prompt(MESSAGES["exitEarly"]);
-    nextRoundAnswer = readline.question();
-  }
-  console.clear();
 
   if (
     round === TOTAL_ROUNDS ||
@@ -169,6 +157,19 @@ while (true) {
       computerScore = 0;
       round = 0;
     }
+  } else {
+    prompt(MESSAGES["nextRound"]);
+    nextRoundAnswer = readline.question();
+    while (!["y"].includes(nextRoundAnswer)) {
+      prompt(MESSAGES["enterChoice"]);
+      nextRoundAnswer = readline.question();
+    }
+
+    if (nextRoundAnswer !== "y") {
+      prompt(MESSAGES["exitEarly"]);
+      nextRoundAnswer = readline.question();
+    }
+    console.clear();
   }
 
   round += 1;
