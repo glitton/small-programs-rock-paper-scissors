@@ -8,7 +8,7 @@
   "enterChoice": "That's not a valid choice. Please enter 'y'",
   "playerWinsRound": "You win round ",
   "playerWins": "You win the game, congratulations!",
-  "computerWins": "Computer wins the game, congratulations!",
+  "computerWins": "Computer wins the game!",
   "computerWinsRound": "Computer wins round ",
   "tie": "It's a tie!",
   "tieRound": "It's a tie for round ",

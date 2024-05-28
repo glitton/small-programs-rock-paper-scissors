@@ -83,13 +83,19 @@ function finalUserChoice(choice) {
   }
   return validUserChoice;
 }
-// This needs work
+// Does this need an else???
 function showGameWinner(playerScore, computerScore, round) {
-  if (playerScore >= 3 && round <= 5) {
+  if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
     prompt(MESSAGES["playerWins"]);
-  } else if (computerScore >= 3 && round <= 5) {
+  } else if (computerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
     prompt(MESSAGES["computerWins"]);
-  } else if (playerScore === computerScore && round === 5) {
+  } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
+    prompt(MESSAGES["gameOver"]);
+  } else if (
+    playerScore < WINNING_SCORE &&
+    computerScore < WINNING_SCORE &&
+    round === TOTAL_ROUNDS
+  ) {
     prompt(MESSAGES["gameOver"]);
   }
 }
