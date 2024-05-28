@@ -129,6 +129,18 @@ while (true) {
   displayRoundWinner(choice, computerChoice, round);
   displayRoundScores(playerScore, computerScore, tie);
 
+  // // move to a function using while or switch so you can break early?
+  // if (round !== 5 && nextRoundAnswer[0] !== "y") {
+  //   prompt(MESSAGES["exitEarly"]);
+  //   nextRoundAnswer = readline.question();
+  //   if (nextRoundAnswer[0] === "y") {
+  //     prompt(MESSAGES["gameEnd"]);
+  //   } else if (nextRoundAnswer[0] === "c") {
+  //     continue;
+  //   }
+  //   break;
+  // }
+
   let nextRoundAnswer;
   if (
     round === TOTAL_ROUNDS ||
@@ -149,7 +161,12 @@ while (true) {
       console.clear();
       prompt(MESSAGES["gameEnd"]);
       break;
-    } // figure out how to repeat a new game
+    } else {
+      tie = 0;
+      playerScore = 0;
+      computerScore = 0;
+      round = 0;
+    }
   } else {
     showGameWinner(playerScore, computerScore, round);
     prompt(MESSAGES["nextRound"]);
@@ -158,24 +175,8 @@ while (true) {
       prompt(MESSAGES["enterChoice"]);
       nextRoundAnswer = readline.question();
     }
+    console.clear();
   }
 
-  console.clear();
-  // move to a function using while or switch so you can break early?
-  if (round !== 5 && nextRoundAnswer[0] !== "y") {
-    prompt(MESSAGES["exitEarly"]);
-    nextRoundAnswer = readline.question();
-    if (nextRoundAnswer[0] === "y") {
-      prompt(MESSAGES["gameEnd"]);
-    } else if (nextRoundAnswer[0] === "c") {
-      continue;
-    }
-    break;
-  }
-
-  if (round !== TOTAL_ROUNDS) {
-    round += 1;
-  } else {
-    return round;
-  }
+  round += 1;
 }
