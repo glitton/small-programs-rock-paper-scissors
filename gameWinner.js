@@ -1,5 +1,4 @@
-// const readline = require("readline-sync");
-// const MESSAGES = require("./game_messages.json");
+// Work on functionality before adding this to the main program
 let round = 4;
 
 function prompt(message) {
