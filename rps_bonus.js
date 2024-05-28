@@ -91,6 +91,8 @@ function showGameWinner(playerScore, computerScore, round) {
     prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === 5) {
     prompt(MESSAGES["gameOver"]);
+  } else {
+    prompt(MESSAGES["gameOver"]);
   }
 }
 
