@@ -128,7 +128,6 @@ while (true) {
 
   displayRoundWinner(choice, computerChoice, round);
   displayRoundScores(playerScore, computerScore, tie);
-  showGameWinner(playerScore, computerScore, round);
 
   let nextRoundAnswer;
 
