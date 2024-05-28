@@ -62,26 +62,25 @@ function displayRoundScores(playerScore, computerScore, tie) {
 }
 
 let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
-let validUserChoice;
 function finalUserChoice(choice) {
   switch (choice) {
     case "ro":
-      validUserChoice = "rock";
+      choice = "rock";
       break;
     case "pa":
-      validUserChoice = "paper";
+      choice = "paper";
       break;
     case "sc":
-      validUserChoice = "scissors";
+      choice = "scissors";
       break;
     case "li":
-      validUserChoice = "lizard";
+      choice = "lizard";
       break;
     case "sp":
-      validUserChoice = "spock";
+      choice = "spock";
       break;
   }
-  return validUserChoice;
+  return choice;
 }
 // Does this need an else???
 function showGameWinner(playerScore, computerScore, round) {
@@ -119,7 +118,6 @@ while (true) {
   prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
 
   let choice = readline.question();
-
   while (!shortenedChoices.includes(choice)) {
     prompt(MESSAGES["invalidChoice"]);
     choice = readline.question();
@@ -127,7 +125,6 @@ while (true) {
   }
 
   finalUserChoice(choice);
-  choice = validUserChoice;
 
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let computerChoice = VALID_CHOICES[randomIndex];
