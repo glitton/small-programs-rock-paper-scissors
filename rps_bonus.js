@@ -149,27 +149,21 @@ while (true) {
       console.clear();
       prompt(MESSAGES["gameEnd"]);
       break;
+    } else {
+      tie = 0;
+      playerScore = 0;
+      computerScore = 0;
+      round = 0;
     }
-  }
-
-  showGameWinner(playerScore, computerScore, round);
-  prompt(MESSAGES["nextRound"]);
-  nextRoundAnswer = readline.question();
-  while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
-    prompt(MESSAGES["enterChoice"]);
+  } else {
+    showGameWinner(playerScore, computerScore, round);
+    prompt(MESSAGES["nextRound"]);
     nextRoundAnswer = readline.question();
-  }
-  console.clear();
-
-  if (round !== 5 && nextRoundAnswer[0] !== "y") {
-    prompt(MESSAGES["exitEarly"]);
-    nextRoundAnswer = readline.question();
-    if (nextRoundAnswer[0] === "y") {
-      prompt(MESSAGES["gameEnd"]);
-    } else if (nextRoundAnswer[0] === "c") {
-      continue;
+    while (nextRoundAnswer[0] !== "n" && nextRoundAnswer[0] !== "y") {
+      prompt(MESSAGES["enterChoice"]);
+      nextRoundAnswer = readline.question();
     }
-    break;
+    console.clear();
   }
 
   round += 1;
