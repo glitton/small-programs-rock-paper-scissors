@@ -1,5 +1,6 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
+
 const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
 const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
@@ -63,7 +64,7 @@ function displayRoundScores(playerScore, computerScore, tie) {
 
 let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
 let playerChoice;
-function finalUserChoice(choice) {
+function finalPlayerChoice(choice) {
   switch (choice) {
     case "ro":
       playerChoice = "rock";
@@ -125,7 +126,7 @@ while (true) {
     console.clear();
   }
 
-  finalUserChoice(choice);
+  finalPlayerChoice(choice);
   choice = playerChoice;
 
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
