@@ -23,7 +23,7 @@ function prompt(message) {
 
 function displayRound() {
   prompt(
-    `*-----------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *-----------* `
+    `\n*--------------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *--------------*\n`
   );
 }
 
