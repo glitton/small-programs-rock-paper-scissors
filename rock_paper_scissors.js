@@ -37,6 +37,8 @@ while (true) {
 
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
 
+  displayWinner(choice, computerChoice);
+
   prompt("Do you want to play again (y/n)?");
   let answer = readline.question().toLowerCase();
   while (answer[0] !== "n" && answer[0] !== "y") {
