@@ -84,6 +84,13 @@ function finalPlayerChoice(choice) {
   }
   return playerChoice;
 }
+
+let computerChoice;
+function finalComputerChoice() {
+  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+  let finalComputerChoice = VALID_CHOICES[randomIndex];
+  return finalComputerChoice;
+}
 // Does this need an else???
 function showGameWinner(playerScore, computerScore, round) {
   if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
@@ -121,22 +128,18 @@ while (true) {
 
   let choice = readline.question();
   while (!shortenedChoices.includes(choice)) {
-    prompt(MESSAGES["invalidChoice"]);
+    prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
     choice = readline.question();
     console.clear();
   }
 
-  finalPlayerChoice(choice);
-  choice = playerChoice;
-
-  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-  let computerChoice = VALID_CHOICES[randomIndex];
+  choice = finalPlayerChoice(choice);
+  computerChoice = finalComputerChoice();
 
   displayRoundWinner(choice, computerChoice, round);
   displayRoundScores(playerScore, computerScore, tie);
 
   let nextRoundAnswer;
-
   if (
     round === TOTAL_ROUNDS ||
     playerScore === WINNING_SCORE ||
