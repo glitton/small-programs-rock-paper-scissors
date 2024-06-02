@@ -1,11 +1,12 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
+
 const GAME_RULES = {
-  Rock: "beats scissors and lizard.",
-  Paper: "beats rock and spock.",
-  Scissors: "beats paper and lizard.",
-  Lizard: "beats paper and spock.",
-  Spock: "beats scissors and rock.",
+  rock: ["scissors", "lizard"],
+  paper: ["rock", "spock"],
+  scissors: ["paper", "lizard"],
+  lizard: ["paper", "spock"],
+  spock: ["rock", "scissors"],
 };
 
 const WINNING_COMBOS = {
@@ -21,22 +22,22 @@ const WINNING_SCORE = 3;
 const VALID_CHOICES = Object.keys(WINNING_COMBOS);
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
 
+let round = 1;
+
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
 }
 
+// DISPLAY FUNCTIONS
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-// DISPLAY FUNCTIONS
 function displayRules(rules) {
   for (const [key, value] of Object.entries(rules)) {
     console.log(`\n----------> ${key} ${value}`);
   }
 }
-
-displayRules("rule", GAME_RULES);
 
 function displayRound(round) {
   prompt(
@@ -44,86 +45,60 @@ function displayRound(round) {
   );
 }
 
-// function playerWins(choice, computerChoice) {
-//   return WINNING_COMBOS[choice].includes(computerChoice);
-// }
+function playerWins(choice, computerChoice) {
+  return GAME_RULES[choice].includes(computerChoice);
+}
 
-// function computerWins(choice, computerChoice) {
-//   return WINNING_COMBOS[computerChoice].includes(choice);
-// }
+function computerWins(choice, computerChoice) {
+  return GAME_RULES[computerChoice].includes(choice);
+}
 
-// function displayTie(choice, computerChoice) {
-//   return (
-//     playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
-//   );
-// }
+function tiedRound(choice, computerChoice) {
+  return (
+    playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
+  );
+}
 
-// function displayRoundWinner(choice, computerChoice, round) {
-//   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
-//   if (playerWins(choice, computerChoice)) {
-//     playerScore += 1;
-//     prompt(`${MESSAGES["playerWinsRound"]}${round}`);
-//   } else if (computerWins(choice, computerChoice)) {
-//     computerScore += 1;
-//     prompt(`${MESSAGES["computerWinsRound"]}${round}`);
-//   } else {
-//     displayTie(choice, computerChoice);
-//     tie += 1;
-//     prompt(`${MESSAGES["tieRound"]}${round}`);
-//   }
-// }
-
-// function displayRoundScores(playerScore, computerScore, tie) {
-//   prompt(
-//     `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
-//   );
-// }
-
-// let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
-// let playerChoice;
-// function finalPlayerChoice(choice) {
-//   switch (choice) {
-//     case "ro":
-//       playerChoice = "rock";
-//       break;
-//     case "pa":
-//       playerChoice = "paper";
-//       break;
-//     case "sc":
-//       playerChoice = "scissors";
-//       break;
-//     case "li":
-//       playerChoice = "lizard";
-//       break;
-//     case "sp":
-//       playerChoice = "spock";
-//       break;
-//   }
-//   return playerChoice;
-// }
-
-// let computerChoice;
-// function finalComputerChoice() {
-//   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-//   let finalComputerChoice = VALID_CHOICES[randomIndex];
-//   return finalComputerChoice;
-// }
-// Does this need an else???
-function showGameWinner(playerScore, computerScore, round) {
-  if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
-    prompt(MESSAGES["playerWins"]);
-  } else if (computerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
-    prompt(MESSAGES["computerWins"]);
-  } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
-    prompt(MESSAGES["gameOver"]);
-  } else if (
-    playerScore < WINNING_SCORE &&
-    computerScore < WINNING_SCORE &&
-    round === TOTAL_ROUNDS
-  ) {
-    prompt(MESSAGES["gameOver"]);
+function displayRoundWinner(choice, computerChoice, round) {
+  prompt(`You chose ${choice} while computer chose ${computerChoice}`);
+  if (playerWins(choice, computerChoice)) {
+    playerScore += 1;
+    prompt(`${MESSAGES["playerWinsRound"]}${round}`);
+  } else if (computerWins(choice, computerChoice)) {
+    computerScore += 1;
+    prompt(`${MESSAGES["computerWinsRound"]}${round}`);
+  } else {
+    displayTie(choice, computerChoice);
+    tie += 1;
+    prompt(`${MESSAGES["tieRound"]}${round}`);
   }
 }
+
+function displayRoundScores(playerScore, computerScore, tie) {
+  prompt(
+    `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
+  );
+}
+
+function finalComputerChoice(computerChoice) {
+  return computerChoice;
+}
+// Does this need an else???
+// function showGameWinner(playerScore, computerScore, round) {
+//   if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+//     prompt(MESSAGES["playerWins"]);
+//   } else if (computerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+//     prompt(MESSAGES["computerWins"]);
+//   } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
+//     prompt(MESSAGES["gameOver"]);
+//   } else if (
+//     playerScore < WINNING_SCORE &&
+//     computerScore < WINNING_SCORE &&
+//     round === TOTAL_ROUNDS
+//   ) {
+//     prompt(MESSAGES["gameOver"]);
+//   }
+// }
 
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
@@ -135,25 +110,36 @@ prompt(`${MESSAGES["winner"]}`);
 /* ---------- GAME STARTS HERE ---------- */
 
 while (true) {
-  let round = 1;
+  let playerScore = 0;
+  let computerScore = 0;
+  let tie = 0;
+
   displayRound(round);
-  // if (round > 1) {
-  //   // displayRoundScores(playerScore, computerScore, tie);
-  // }
+  if (round > 1) {
+    displayRoundScores(playerScore, computerScore, tie);
+  }
 
-  // prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+  prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
 
-  // let choice = readline.question();
-  // while (!shortenedChoices.includes(choice)) {
-  //   prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
-  //   choice = readline.question();
-  //   console.clear();
-  // }
+  let choice = readline.question();
+  while (
+    !SHORTENED_CHOICES.includes(choice) ||
+    VALID_CHOICES.includes(choice)
+  ) {
+    prompt(
+      `${MESSAGES["invalidGameChoice"]} ${SHORTENED_CHOICES.join(
+        ", "
+      )} or ${VALID_CHOICES.join(", ")}`
+    );
+    choice = readline.question();
+    console.clear();
+  }
 
-  // choice = finalPlayerChoice(choice);
-  // computerChoice = finalComputerChoice();
+  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+  let computerChoice = VALID_CHOICES[randomIndex];
 
-  // displayRoundWinner(choice, computerChoice, round);
+  displayRoundWinner(choice, computerChoice, round);
   // displayRoundScores(playerScore, computerScore, tie);
 
   // let nextRoundAnswer;
@@ -196,10 +182,9 @@ while (true) {
   //   }
   //   console.clear();
   // }
-
   round += 1;
   if (round === 5) {
     console.log("fifth round");
+    break;
   }
-  break;
 }
