@@ -1,12 +1,12 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
-const GAME_RULES = {
-  Rock: "beats scissors and lizard.",
-  Paper: "beats rock and spock.",
-  Scissors: "beats paper and lizard.",
-  Lizard: "beats paper and spock.",
-  Spock: "beats scissors and rock.",
-};
+// const GAME_RULES = {
+//   Rock: "beats scissors and lizard.",
+//   Paper: "beats rock and spock.",
+//   Scissors: "beats paper and lizard.",
+//   Lizard: "beats paper and spock.",
+//   Spock: "beats scissors and rock.",
+// };
 
 const WINNING_COMBOS = {
   rock: { abbr: "r", beats: ["scissors", "lizard"] },
@@ -20,9 +20,16 @@ const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
 const VALID_CHOICES = Object.keys(WINNING_COMBOS);
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
+const GAME_RULES = gameRules(VALID_CHOICES);
+
+console.log("rules", VALID_CHOICES);
 
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
+}
+
+function gameRules(options) {
+  return options.map((option) => WINNING_COMBOS[option]["beats"]);
 }
 
 function prompt(message) {
@@ -108,19 +115,20 @@ function displayRound(round) {
 //   let finalComputerChoice = VALID_CHOICES[randomIndex];
 //   return finalComputerChoice;
 // }
-// Does this need an else???
 function showGameWinner(playerScore, computerScore, round) {
-  if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+  if (playerScore >= WINNING_SCORE) {
     prompt(MESSAGES["playerWins"]);
-  } else if (computerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+  } else if (computerScore >= WINNING_SCORE) {
     prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
     prompt(MESSAGES["gameOver"]);
-  } else if (
-    playerScore < WINNING_SCORE &&
-    computerScore < WINNING_SCORE &&
-    round === TOTAL_ROUNDS
-  ) {
+    // } else if (
+    //   playerScore < WINNING_SCORE &&
+    //   computerScore < WINNING_SCORE &&
+    //   round === TOTAL_ROUNDS
+    // ) {
+    //   prompt(MESSAGES["gameOver"]);
+  } else {
     prompt(MESSAGES["gameOver"]);
   }
 }
@@ -128,8 +136,8 @@ function showGameWinner(playerScore, computerScore, round) {
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
 prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
-prompt(`Winning combinations are: `);
-displayRules(GAME_RULES);
+// prompt(`Winning combinations are: `);
+// displayRules(GAME_RULES);
 prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
