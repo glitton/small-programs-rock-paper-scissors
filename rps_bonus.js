@@ -80,20 +80,19 @@ function displayRoundScores(playerScore, computerScore, tie) {
   );
 }
 
-// let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
 let playerChoice;
 function finalPlayerChoice(choice) {
   switch (choice) {
-    case "ro":
+    case "r":
       playerChoice = "rock";
       break;
-    case "pa":
+    case "p":
       playerChoice = "paper";
       break;
     case "sc":
       playerChoice = "scissors";
       break;
-    case "li":
+    case "l":
       playerChoice = "lizard";
       break;
     case "sp":
@@ -147,7 +146,7 @@ while (true) {
     console.clear();
   }
 
-  // choice = finalPlayerChoice(choice);
+  choice = finalPlayerChoice(choice);
   computerChoice = finalComputerChoice();
 
   displayRoundWinner(choice, computerChoice, round);
