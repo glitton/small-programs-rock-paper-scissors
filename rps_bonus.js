@@ -13,34 +13,21 @@ const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
 const VALID_CHOICES = Object.keys(WINNING_COMBOS);
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
-const GAME_RULES = gameRules(VALID_CHOICES);
-
-console.log("rules", GAME_RULES);
 
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
 }
 
-function displayGameRules(options) {
-  options.map((option) =>
-    console.log(`option beats ${WINNING_COMBOS[option]["beats"]}`)
-  );
-}
-
+// DISPLAY FUNCTIONS
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-// DISPLAY FUNCTIONS
-// function displayRules(obj) {
-// key is VALID_CHOICES
-// value is GAME_RULES
-
-//   for (const [key, value] in Object.entries(obj))
-//     console.log(`\n----------> ${key} ${value}`);
-// }
-
-// displayRules("rule", GAME_RULES);
+function displayGameRules(options) {
+  options.map((option) =>
+    console.log(`${option} beats ${WINNING_COMBOS[option]["beats"]}`)
+  );
+}
 
 function displayRound(round) {
   prompt(
