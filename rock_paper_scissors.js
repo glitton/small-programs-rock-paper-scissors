@@ -46,6 +46,5 @@ while (true) {
     answer = readline.question().toLowerCase();
   }
 
-  // if (answer[0] !== "y") break;
-  if (answer[0] !== "y") return false;
+  if (answer[0] !== "y") break;
 }
