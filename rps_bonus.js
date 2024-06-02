@@ -97,12 +97,12 @@ function displayRound() {
 //   return playerChoice;
 // }
 
-let computerChoice;
-function finalComputerChoice() {
-  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-  let finalComputerChoice = VALID_CHOICES[randomIndex];
-  return finalComputerChoice;
-}
+// let computerChoice;
+// function finalComputerChoice() {
+//   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+//   let finalComputerChoice = VALID_CHOICES[randomIndex];
+//   return finalComputerChoice;
+// }
 // Does this need an else???
 function showGameWinner(playerScore, computerScore, round) {
   if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
