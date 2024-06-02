@@ -1,12 +1,5 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
-// const GAME_RULES = {
-//   Rock: "beats scissors and lizard.",
-//   Paper: "beats rock and spock.",
-//   Scissors: "beats paper and lizard.",
-//   Lizard: "beats paper and spock.",
-//   Spock: "beats scissors and rock.",
-// };
 
 const WINNING_COMBOS = {
   rock: { abbr: "r", beats: ["scissors", "lizard"] },
@@ -28,8 +21,10 @@ function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
 }
 
-function gameRules(options) {
-  return options.map((option) => WINNING_COMBOS[option]["beats"]);
+function displayGameRules(options) {
+  options.map((option) =>
+    console.log(`option beats ${WINNING_COMBOS[option]["beats"]}`)
+  );
 }
 
 function prompt(message) {
@@ -37,13 +32,15 @@ function prompt(message) {
 }
 
 // DISPLAY FUNCTIONS
-function displayRules(rules) {
-  for (const [key, value] of Object.entries(rules)) {
-    console.log(`\n----------> ${key} ${value}`);
-  }
-}
+// function displayRules(obj) {
+// key is VALID_CHOICES
+// value is GAME_RULES
 
-displayRules("rule", GAME_RULES);
+//   for (const [key, value] in Object.entries(obj))
+//     console.log(`\n----------> ${key} ${value}`);
+// }
+
+// displayRules("rule", GAME_RULES);
 
 function displayRound(round) {
   prompt(
@@ -136,8 +133,8 @@ function showGameWinner(playerScore, computerScore, round) {
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
 prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
-// prompt(`Winning combinations are: `);
-// displayRules(GAME_RULES);
+prompt(`Winning combinations are: `);
+displayGameRules(VALID_CHOICES);
 prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
