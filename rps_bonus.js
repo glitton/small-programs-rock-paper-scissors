@@ -91,19 +91,21 @@ function finalComputerChoice() {
   let finalComputerChoice = VALID_CHOICES[randomIndex];
   return finalComputerChoice;
 }
-// Does this need an else???
+
 function showGameWinner(playerScore, computerScore, round) {
-  if (playerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+  if (playerScore >= WINNING_SCORE) {
     prompt(MESSAGES["playerWins"]);
-  } else if (computerScore >= WINNING_SCORE && round <= TOTAL_ROUNDS) {
+  } else if (computerScore >= WINNING_SCORE) {
     prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
     prompt(MESSAGES["gameOver"]);
-  } else if (
-    playerScore < WINNING_SCORE &&
-    computerScore < WINNING_SCORE &&
-    round === TOTAL_ROUNDS
-  ) {
+    // } else if (
+    //   playerScore < WINNING_SCORE &&
+    //   computerScore < WINNING_SCORE &&
+    //   round === TOTAL_ROUNDS
+    // ) {
+    //   prompt(MESSAGES["gameOver"]);
+  } else {
     prompt(MESSAGES["gameOver"]);
   }
 }
