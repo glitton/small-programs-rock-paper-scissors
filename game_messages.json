@@ -1,15 +1,8 @@
 {
   "welcome": "Let's play Rock, Paper, Scissors, Lizard, Spock which is an expanded version\n   of the traditional game of Rock, Paper, Scissors.",
   "description1": "To play the game, choose either",
-  "description2": "Or the abbreviated equivalents of",
-  "winningConditions": {
-    "rock": "Rock beats scissors and lizard.",
-    "paper": "Paper beats rock and spock.",
-    "scissors": "Scissors beats paper and lizard.",
-    "lizard": "Lizard beats paper and spock.",
-    "spock": "Spock beats scissors and rock."
-  },
-  "winner": "This is a best of five game.\n   First one to win 3 out of 5 rounds is the champion!",
+  "description2": "Or you can use the shortcut keys of",
+  "winner": "This is a best of five game.\n   First one to win 3 rounds out of 5 is the champion!",
   "round": "LET'S PLAY ROUND ",
   "invalidChoice": "That's not a valid choice. Please enter 'y' or 'n'.",
   "invalidGameChoice": "That's not a valid choice. Please enter",

@@ -1,8 +1,13 @@
 const readline = require("readline-sync");
 const MESSAGES = require("./game_messages.json");
+const GAME_RULES = {
+  Rock: "beats scissors and lizard.",
+  Paper: "beats rock and spock.",
+  Scissors: "beats paper and lizard.",
+  Lizard: "beats paper and spock.",
+  Spock: "beats scissors and rock.",
+};
 
-const TOTAL_ROUNDS = 5;
-const WINNING_SCORE = 3;
 const WINNING_COMBOS = {
   rock: { abbr: "r", beats: ["scissors", "lizard"] },
   paper: { abbr: "p", beats: ["rock", "spock"] },
@@ -11,29 +16,29 @@ const WINNING_COMBOS = {
   spock: { abbr: "sp", beats: ["scissors", "rock"] },
 };
 
+const TOTAL_ROUNDS = 5;
+const WINNING_SCORE = 3;
 const VALID_CHOICES = Object.keys(WINNING_COMBOS);
-// console.log("valid choices", VALID_CHOICES);
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
-// console.log(SHORTENED_CHOICES);
-
-let playerScore = 0;
-let computerScore = 0;
-let tie = 0;
-let round = 1;
 
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
-}
-
-function displayWinningCombos(playerChoices) {
-  return playerChoices.map((choice) => WINNING_COMBOS[choice]["beats"]);
 }
 
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function displayRound() {
+// DISPLAY FUNCTIONS
+function displayRules(rules) {
+  for (const [key, value] of Object.entries(rules)) {
+    console.log(`\n----------> ${key} ${value}`);
+  }
+}
+
+displayRules("rule", GAME_RULES);
+
+function displayRound(round) {
   prompt(
     `\n*--------------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *--------------*\n`
   );
@@ -123,18 +128,18 @@ function showGameWinner(playerScore, computerScore, round) {
 prompt(MESSAGES["welcome"]);
 prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
 prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
-prompt(
-  `Here are the winning conditions ${displayWinningCombos(VALID_CHOICESS)}`
-);
+prompt(`Winning combinations are: `);
+displayRules(GAME_RULES);
 prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
 
 while (true) {
-  displayRound();
-  if (round > 1) {
-    displayRoundScores(playerScore, computerScore, tie);
-  }
+  let round = 1;
+  displayRound(round);
+  // if (round > 1) {
+  //   // displayRoundScores(playerScore, computerScore, tie);
+  // }
 
   // prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
 
@@ -151,46 +156,50 @@ while (true) {
   // displayRoundWinner(choice, computerChoice, round);
   // displayRoundScores(playerScore, computerScore, tie);
 
-  let nextRoundAnswer;
-  if (
-    round === TOTAL_ROUNDS ||
-    playerScore === WINNING_SCORE ||
-    computerScore === WINNING_SCORE
-  ) {
-    showGameWinner(playerScore, computerScore, round);
-    prompt(MESSAGES["anotherGame"]);
-    let playAgainAnswer = readline.question();
-    console.clear();
+  // let nextRoundAnswer;
+  // if (
+  //   round === TOTAL_ROUNDS ||
+  //   playerScore === WINNING_SCORE ||
+  //   computerScore === WINNING_SCORE
+  // ) {
+  //   showGameWinner(playerScore, computerScore, round);
+  //   prompt(MESSAGES["anotherGame"]);
+  //   let playAgainAnswer = readline.question();
+  //   console.clear();
 
-    while (!["y", "n"].includes(playAgainAnswer)) {
-      prompt(MESSAGES["invalidChoice"]);
-      playAgainAnswer = readline.question();
-      console.clear();
-    }
-    if (playAgainAnswer === "n") {
-      console.clear();
-      prompt(MESSAGES["gameEnd"]);
-      break;
-    } else {
-      tie = 0;
-      playerScore = 0;
-      computerScore = 0;
-      round = 0;
-    }
-  } else {
-    prompt(MESSAGES["nextRound"]);
-    nextRoundAnswer = readline.question();
-    while (!["y"].includes(nextRoundAnswer)) {
-      prompt(MESSAGES["enterChoice"]);
-      nextRoundAnswer = readline.question();
-    }
+  //   while (!["y", "n"].includes(playAgainAnswer)) {
+  //     prompt(MESSAGES["invalidChoice"]);
+  //     playAgainAnswer = readline.question();
+  //     console.clear();
+  //   }
+  //   if (playAgainAnswer === "n") {
+  //     console.clear();
+  //     prompt(MESSAGES["gameEnd"]);
+  //     break;
+  //   } else {
+  //     tie = 0;
+  //     playerScore = 0;
+  //     computerScore = 0;
+  //     round = 0;
+  //   }
+  // } else {
+  //   prompt(MESSAGES["nextRound"]);
+  //   nextRoundAnswer = readline.question();
+  //   while (!["y"].includes(nextRoundAnswer)) {
+  //     prompt(MESSAGES["enterChoice"]);
+  //     nextRoundAnswer = readline.question();
+  //   }
 
-    if (nextRoundAnswer !== "y") {
-      prompt(MESSAGES["exitEarly"]);
-      nextRoundAnswer = readline.question();
-    }
-    console.clear();
-  }
+  //   if (nextRoundAnswer !== "y") {
+  //     prompt(MESSAGES["exitEarly"]);
+  //     nextRoundAnswer = readline.question();
+  //   }
+  //   console.clear();
+  // }
 
   round += 1;
+  if (round === 5) {
+    console.log("fifth round");
+  }
+  break;
 }
