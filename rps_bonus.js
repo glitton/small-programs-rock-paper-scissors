@@ -22,7 +22,7 @@ const VALID_CHOICES = Object.keys(WINNING_COMBOS);
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
 const GAME_RULES = gameRules(VALID_CHOICES);
 
-console.log("rules", VALID_CHOICES);
+console.log("rules", GAME_RULES);
 
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
