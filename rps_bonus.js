@@ -99,12 +99,6 @@ function showGameWinner(playerScore, computerScore, round) {
     prompt(MESSAGES["computerWins"]);
   } else if (playerScore === computerScore && round === TOTAL_ROUNDS) {
     prompt(MESSAGES["gameOver"]);
-    // } else if (
-    //   playerScore < WINNING_SCORE &&
-    //   computerScore < WINNING_SCORE &&
-    //   round === TOTAL_ROUNDS
-    // ) {
-    //   prompt(MESSAGES["gameOver"]);
   } else {
     prompt(MESSAGES["gameOver"]);
   }
