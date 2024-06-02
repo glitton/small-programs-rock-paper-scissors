@@ -3,19 +3,31 @@ const MESSAGES = require("./game_messages.json");
 
 const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
-const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
 const WINNING_COMBOS = {
-  rock: ["scissors", "lizard"],
-  paper: ["rock", "spock"],
-  scissors: ["paper", "lizard"],
-  lizard: ["paper", "spock"],
-  spock: ["rock", "scissors"],
+  rock: { abbr: "r", beats: ["scissors", "lizard"] },
+  paper: { abbr: "p", beats: ["rock", "spock"] },
+  scissors: { abbr: "sc", beats: ["paper", "lizard"] },
+  lizard: { abbr: "l", beats: ["paper", "spock"] },
+  spock: { abbr: "sp", beats: ["scissors", "rock"] },
 };
+
+const VALID_CHOICES = Object.keys(WINNING_COMBOS);
+// console.log("valid choices", VALID_CHOICES);
+const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
+// console.log(SHORTENED_CHOICES);
 
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
 let round = 1;
+
+function abbreviatedChoices(choices) {
+  return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
+}
+
+function displayWinningCombos(playerChoices) {
+  return playerChoices.map((choice) => WINNING_COMBOS[choice]["beats"]);
+}
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -27,63 +39,63 @@ function displayRound() {
   );
 }
 
-function playerWins(choice, computerChoice) {
-  return WINNING_COMBOS[choice].includes(computerChoice);
-}
+// function playerWins(choice, computerChoice) {
+//   return WINNING_COMBOS[choice].includes(computerChoice);
+// }
 
-function computerWins(choice, computerChoice) {
-  return WINNING_COMBOS[computerChoice].includes(choice);
-}
+// function computerWins(choice, computerChoice) {
+//   return WINNING_COMBOS[computerChoice].includes(choice);
+// }
 
-function displayTie(choice, computerChoice) {
-  return (
-    playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
-  );
-}
+// function displayTie(choice, computerChoice) {
+//   return (
+//     playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
+//   );
+// }
 
-function displayRoundWinner(choice, computerChoice, round) {
-  prompt(`You chose ${choice} while computer chose ${computerChoice}`);
-  if (playerWins(choice, computerChoice)) {
-    playerScore += 1;
-    prompt(`${MESSAGES["playerWinsRound"]}${round}`);
-  } else if (computerWins(choice, computerChoice)) {
-    computerScore += 1;
-    prompt(`${MESSAGES["computerWinsRound"]}${round}`);
-  } else {
-    displayTie(choice, computerChoice);
-    tie += 1;
-    prompt(`${MESSAGES["tieRound"]}${round}`);
-  }
-}
+// function displayRoundWinner(choice, computerChoice, round) {
+//   prompt(`You chose ${choice} while computer chose ${computerChoice}`);
+//   if (playerWins(choice, computerChoice)) {
+//     playerScore += 1;
+//     prompt(`${MESSAGES["playerWinsRound"]}${round}`);
+//   } else if (computerWins(choice, computerChoice)) {
+//     computerScore += 1;
+//     prompt(`${MESSAGES["computerWinsRound"]}${round}`);
+//   } else {
+//     displayTie(choice, computerChoice);
+//     tie += 1;
+//     prompt(`${MESSAGES["tieRound"]}${round}`);
+//   }
+// }
 
-function displayRoundScores(playerScore, computerScore, tie) {
-  prompt(
-    `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
-  );
-}
+// function displayRoundScores(playerScore, computerScore, tie) {
+//   prompt(
+//     `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
+//   );
+// }
 
-let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
-let playerChoice;
-function finalPlayerChoice(choice) {
-  switch (choice) {
-    case "ro":
-      playerChoice = "rock";
-      break;
-    case "pa":
-      playerChoice = "paper";
-      break;
-    case "sc":
-      playerChoice = "scissors";
-      break;
-    case "li":
-      playerChoice = "lizard";
-      break;
-    case "sp":
-      playerChoice = "spock";
-      break;
-  }
-  return playerChoice;
-}
+// let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
+// let playerChoice;
+// function finalPlayerChoice(choice) {
+//   switch (choice) {
+//     case "ro":
+//       playerChoice = "rock";
+//       break;
+//     case "pa":
+//       playerChoice = "paper";
+//       break;
+//     case "sc":
+//       playerChoice = "scissors";
+//       break;
+//     case "li":
+//       playerChoice = "lizard";
+//       break;
+//     case "sp":
+//       playerChoice = "spock";
+//       break;
+//   }
+//   return playerChoice;
+// }
 
 let computerChoice;
 function finalComputerChoice() {
@@ -109,12 +121,12 @@ function showGameWinner(playerScore, computerScore, round) {
 }
 
 prompt(MESSAGES["welcome"]);
-prompt(`${MESSAGES["winner"]}`);
+prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
 prompt(
-  `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
-    MESSAGES["description2"]
-  } ${VALID_CHOICES.join(", ")}.`
+  `Here are the winning conditions ${displayWinningCombos(VALID_CHOICESS)}`
 );
+prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
 
@@ -124,20 +136,20 @@ while (true) {
     displayRoundScores(playerScore, computerScore, tie);
   }
 
-  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  // prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
 
-  let choice = readline.question();
-  while (!shortenedChoices.includes(choice)) {
-    prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
-    choice = readline.question();
-    console.clear();
-  }
+  // let choice = readline.question();
+  // while (!shortenedChoices.includes(choice)) {
+  //   prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
+  //   choice = readline.question();
+  //   console.clear();
+  // }
 
-  choice = finalPlayerChoice(choice);
-  computerChoice = finalComputerChoice();
+  // choice = finalPlayerChoice(choice);
+  // computerChoice = finalComputerChoice();
 
-  displayRoundWinner(choice, computerChoice, round);
-  displayRoundScores(playerScore, computerScore, tie);
+  // displayRoundWinner(choice, computerChoice, round);
+  // displayRoundScores(playerScore, computerScore, tie);
 
   let nextRoundAnswer;
   if (
