@@ -12,9 +12,11 @@ const WINNING_COMBOS = {
   spock: { abbr: "sp", beats: ["scissors", "rock"] },
 };
 
-const VALID_CHOICES = Object.keys(WINNING_COMBOS);
+const VALID_CHOICES = Object.keys(WINNING_COMBOS); //words of choices
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
+const ALL_CHOICES = VALID_CHOICES.concat(SHORTENED_CHOICES); //combined arrays
 
+//abbreviation of choices
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
 }
@@ -78,7 +80,7 @@ function displayRoundScores(playerScore, computerScore, tie) {
   );
 }
 
-let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
+// let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
 let playerChoice;
 function finalPlayerChoice(choice) {
   switch (choice) {
@@ -130,21 +132,22 @@ prompt(`${MESSAGES["winner"]}`);
 /* ---------- GAME STARTS HERE ---------- */
 
 while (true) {
-  displayRound();
+  displayRound(round);
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
   }
 
-  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+  prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
 
   let choice = readline.question();
-  while (!shortenedChoices.includes(choice)) {
-    prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
+  while (!ALL_CHOICES.includes(choice)) {
+    prompt(`${MESSAGES["invalidGameChoice"]} ${ALL_CHOICES.join(", ")}`);
     choice = readline.question();
     console.clear();
   }
 
-  choice = finalPlayerChoice(choice);
+  // choice = finalPlayerChoice(choice);
   computerChoice = finalComputerChoice();
 
   displayRoundWinner(choice, computerChoice, round);
