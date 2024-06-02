@@ -3,36 +3,52 @@ const MESSAGES = require("./game_messages.json");
 
 const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
-const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
+
 const WINNING_COMBOS = {
-  rock: ["scissors", "lizard"],
-  paper: ["rock", "spock"],
-  scissors: ["paper", "lizard"],
-  lizard: ["paper", "spock"],
-  spock: ["rock", "scissors"],
+  rock: { abbr: "r", beats: ["scissors", "lizard"] },
+  paper: { abbr: "p", beats: ["rock", "spock"] },
+  scissors: { abbr: "sc", beats: ["paper", "lizard"] },
+  lizard: { abbr: "l", beats: ["paper", "spock"] },
+  spock: { abbr: "sp", beats: ["scissors", "rock"] },
 };
+
+const VALID_CHOICES = Object.keys(WINNING_COMBOS);
+const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
+
+function abbreviatedChoices(choices) {
+  return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
+}
 
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
 let round = 1;
 
+// DISPLAY FUNCTIONS
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function displayRound() {
+function displayGameRules(options) {
+  options.map((option) =>
+    console.log(
+      `\n----------> ${option} beats ${WINNING_COMBOS[option]["beats"]}`
+    )
+  );
+}
+
+function displayRound(round) {
   prompt(
     `\n*--------------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *--------------*\n`
   );
 }
 
 function playerWins(choice, computerChoice) {
-  return WINNING_COMBOS[choice].includes(computerChoice);
+  return WINNING_COMBOS[choice]["abbr"].includes(computerChoice);
 }
 
 function computerWins(choice, computerChoice) {
-  return WINNING_COMBOS[computerChoice].includes(choice);
+  return WINNING_COMBOS[computerChoice]["abbr"].includes(choice);
 }
 
 function displayTie(choice, computerChoice) {
@@ -105,12 +121,11 @@ function showGameWinner(playerScore, computerScore, round) {
 }
 
 prompt(MESSAGES["welcome"]);
+prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
+prompt(`Winning combinations are: `);
+displayGameRules(VALID_CHOICES);
 prompt(`${MESSAGES["winner"]}`);
-prompt(
-  `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
-    MESSAGES["description2"]
-  } ${VALID_CHOICES.join(", ")}.`
-);
 
 /* ---------- GAME STARTS HERE ---------- */
 
