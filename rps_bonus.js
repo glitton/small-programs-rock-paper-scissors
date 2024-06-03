@@ -3,36 +3,46 @@ const MESSAGES = require("./game_messages.json");
 
 const TOTAL_ROUNDS = 5;
 const WINNING_SCORE = 3;
-const VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"];
+
 const WINNING_COMBOS = {
-  rock: ["scissors", "lizard"],
-  paper: ["rock", "spock"],
-  scissors: ["paper", "lizard"],
-  lizard: ["paper", "spock"],
-  spock: ["rock", "scissors"],
+  rock: { abbr: "r", beats: ["scissors", "lizard"] },
+  paper: { abbr: "p", beats: ["rock", "spock"] },
+  scissors: { abbr: "sc", beats: ["paper", "lizard"] },
+  lizard: { abbr: "l", beats: ["paper", "spock"] },
+  spock: { abbr: "sp", beats: ["scissors", "rock"] },
 };
+
+const VALID_CHOICES = Object.keys(WINNING_COMBOS); //words of choices
+const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES); //shortcut choices
+const ALL_CHOICES = VALID_CHOICES.concat(SHORTENED_CHOICES); //combined arrays
+
+//abbreviation of choices
+function abbreviatedChoices(choices) {
+  return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
+}
 
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
 let round = 1;
 
+// DISPLAY FUNCTIONS
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function displayRound() {
-  prompt(
-    `\n*--------------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *--------------*\n`
+function displayGameRules(options) {
+  options.map((option) =>
+    console.log(
+      `\n----------> ${option} beats ${WINNING_COMBOS[option]["beats"]}`
+    )
   );
 }
 
-function playerWins(choice, computerChoice) {
-  return WINNING_COMBOS[choice].includes(computerChoice);
-}
-
-function computerWins(choice, computerChoice) {
-  return WINNING_COMBOS[computerChoice].includes(choice);
+function displayRound(round) {
+  prompt(
+    `\n*--------------* ${MESSAGES["round"]}${round} of ${TOTAL_ROUNDS} *--------------*\n`
+  );
 }
 
 function displayTie(choice, computerChoice) {
@@ -62,25 +72,49 @@ function displayRoundScores(playerScore, computerScore, tie) {
   );
 }
 
-let shortenedChoices = VALID_CHOICES.map((item) => item.slice(0, 2));
+// Computation functions
+
+function playerWins(choice, computerChoice) {
+  return WINNING_COMBOS[choice]["beats"].includes(computerChoice);
+}
+
+function computerWins(choice, computerChoice) {
+  return WINNING_COMBOS[computerChoice]["beats"].includes(choice);
+}
+
 let playerChoice;
+// function finalPlayerChoice(choice) {
+//   switch (choice) {
+//     case "r":
+//       playerChoice = "rock";
+//       break;
+//     case "p":
+//       playerChoice = "paper";
+//       break;
+//     case "sc":
+//       playerChoice = "scissors";
+//       break;
+//     case "l":
+//       playerChoice = "lizard";
+//       break;
+//     case "sp":
+//       playerChoice = "spock";
+//       break;
+//   }
+//   return playerChoice;
+// }
+
 function finalPlayerChoice(choice) {
-  switch (choice) {
-    case "ro":
-      playerChoice = "rock";
-      break;
-    case "pa":
-      playerChoice = "paper";
-      break;
-    case "sc":
-      playerChoice = "scissors";
-      break;
-    case "li":
-      playerChoice = "lizard";
-      break;
-    case "sp":
-      playerChoice = "spock";
-      break;
+  if (choice === "r" || choice === "rock") {
+    playerChoice = "rock";
+  } else if (choice === "p" || choice === "paper") {
+    playerChoice = "paper";
+  } else if (choice === "sc" || choice === "scissors") {
+    playerChoice = "scissors";
+  } else if (choice === "l" || choice === "lizard") {
+    playerChoice = "lizard";
+  } else if (choice === "sp" || choice === "spock") {
+    playerChoice = "spock";
   }
   return playerChoice;
 }
@@ -105,26 +139,26 @@ function showGameWinner(playerScore, computerScore, round) {
 }
 
 prompt(MESSAGES["welcome"]);
+prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
+prompt(`Winning combinations are: `);
+displayGameRules(VALID_CHOICES);
 prompt(`${MESSAGES["winner"]}`);
-prompt(
-  `${MESSAGES["description1"]} ${shortenedChoices.join(", ")}\n ${
-    MESSAGES["description2"]
-  } ${VALID_CHOICES.join(", ")}.`
-);
 
 /* ---------- GAME STARTS HERE ---------- */
 
 while (true) {
-  displayRound();
+  displayRound(round);
   if (round > 1) {
     displayRoundScores(playerScore, computerScore, tie);
   }
 
-  prompt(`${MESSAGES["description1"]} ${shortenedChoices.join(", ")}`);
+  prompt(`${MESSAGES["description1"]} ${VALID_CHOICES.join(", ")}`);
+  prompt(`${MESSAGES["description2"]} ${SHORTENED_CHOICES.join(", ")}`);
 
   let choice = readline.question();
-  while (!shortenedChoices.includes(choice)) {
-    prompt(`${MESSAGES["invalidGameChoice"]} ${shortenedChoices.join(", ")}`);
+  while (!ALL_CHOICES.includes(choice)) {
+    prompt(`${MESSAGES["invalidGameChoice"]} ${ALL_CHOICES.join(", ")}`);
     choice = readline.question();
     console.clear();
   }
