@@ -13,7 +13,7 @@ const WINNING_COMBOS = {
 };
 
 const VALID_CHOICES = Object.keys(WINNING_COMBOS); //words of choices
-const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES);
+const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES); //shortcut choices
 const ALL_CHOICES = VALID_CHOICES.concat(SHORTENED_CHOICES); //combined arrays
 
 //abbreviation of choices
@@ -45,14 +45,6 @@ function displayRound(round) {
   );
 }
 
-function playerWins(choice, computerChoice) {
-  return WINNING_COMBOS[choice]["abbr"].includes(computerChoice);
-}
-
-function computerWins(choice, computerChoice) {
-  return WINNING_COMBOS[computerChoice]["abbr"].includes(choice);
-}
-
 function displayTie(choice, computerChoice) {
   return (
     playerWins(choice, computerChoice) === computerWins(choice, computerChoice)
@@ -78,6 +70,16 @@ function displayRoundScores(playerScore, computerScore, tie) {
   prompt(
     `Your score is ${playerScore}, the computer's score is ${computerScore}, and ties are ${tie}`
   );
+}
+
+// Computation functions
+// These need work, needs to return key is rock, value is ["scissors", "lizard"]
+function playerWins(choice, computerChoice) {
+  return WINNING_COMBOS[choice]["beats"].includes(computerChoice);
+}
+
+function computerWins(choice, computerChoice) {
+  return WINNING_COMBOS[computerChoice]["beats"].includes(choice);
 }
 
 let playerChoice;
