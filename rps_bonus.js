@@ -19,6 +19,7 @@ const ALL_CHOICES = VALID_CHOICES.concat(SHORTENED_CHOICES); //combined arrays
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
+let round = 1;
 
 //abbreviation of choices
 function abbreviatedChoices(choices) {
@@ -125,7 +126,6 @@ prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
 
-let round = 1;
 while (true) {
   displayRound(round);
   if (round > 1) {
