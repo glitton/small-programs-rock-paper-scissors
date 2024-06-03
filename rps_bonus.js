@@ -73,7 +73,7 @@ function displayRoundScores(playerScore, computerScore, tie) {
 }
 
 // Computation functions
-// These need work, needs to return key is rock, value is ["scissors", "lizard"]
+
 function playerWins(choice, computerChoice) {
   return WINNING_COMBOS[choice]["beats"].includes(computerChoice);
 }
@@ -83,23 +83,38 @@ function computerWins(choice, computerChoice) {
 }
 
 let playerChoice;
+// function finalPlayerChoice(choice) {
+//   switch (choice) {
+//     case "r":
+//       playerChoice = "rock";
+//       break;
+//     case "p":
+//       playerChoice = "paper";
+//       break;
+//     case "sc":
+//       playerChoice = "scissors";
+//       break;
+//     case "l":
+//       playerChoice = "lizard";
+//       break;
+//     case "sp":
+//       playerChoice = "spock";
+//       break;
+//   }
+//   return playerChoice;
+// }
+
 function finalPlayerChoice(choice) {
-  switch (choice) {
-    case "r":
-      playerChoice = "rock";
-      break;
-    case "p":
-      playerChoice = "paper";
-      break;
-    case "sc":
-      playerChoice = "scissors";
-      break;
-    case "l":
-      playerChoice = "lizard";
-      break;
-    case "sp":
-      playerChoice = "spock";
-      break;
+  if (choice === "r" || choice === "rock") {
+    playerChoice = "rock";
+  } else if (choice === "p" || choice === "paper") {
+    playerChoice = "paper";
+  } else if (choice === "sc" || choice === "scissors") {
+    playerChoice = "scissors";
+  } else if (choice === "l" || choice === "lizard") {
+    playerChoice = "lizard";
+  } else if (choice === "sp" || choice === "spock") {
+    playerChoice = "spock";
   }
   return playerChoice;
 }
