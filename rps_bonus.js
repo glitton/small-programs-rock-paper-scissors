@@ -16,15 +16,14 @@ const VALID_CHOICES = Object.keys(WINNING_COMBOS); //words of choices
 const SHORTENED_CHOICES = abbreviatedChoices(VALID_CHOICES); //shortcut choices
 const ALL_CHOICES = VALID_CHOICES.concat(SHORTENED_CHOICES); //combined arrays
 
+let playerScore = 0;
+let computerScore = 0;
+let tie = 0;
+
 //abbreviation of choices
 function abbreviatedChoices(choices) {
   return choices.map((choice) => WINNING_COMBOS[choice]["abbr"]);
 }
-
-let playerScore = 0;
-let computerScore = 0;
-let tie = 0;
-let round = 1;
 
 // DISPLAY FUNCTIONS
 function prompt(message) {
@@ -83,27 +82,6 @@ function computerWins(choice, computerChoice) {
 }
 
 let playerChoice;
-// function finalPlayerChoice(choice) {
-//   switch (choice) {
-//     case "r":
-//       playerChoice = "rock";
-//       break;
-//     case "p":
-//       playerChoice = "paper";
-//       break;
-//     case "sc":
-//       playerChoice = "scissors";
-//       break;
-//     case "l":
-//       playerChoice = "lizard";
-//       break;
-//     case "sp":
-//       playerChoice = "spock";
-//       break;
-//   }
-//   return playerChoice;
-// }
-
 function finalPlayerChoice(choice) {
   if (choice === "r" || choice === "rock") {
     playerChoice = "rock";
@@ -147,6 +125,7 @@ prompt(`${MESSAGES["winner"]}`);
 
 /* ---------- GAME STARTS HERE ---------- */
 
+let round = 1;
 while (true) {
   displayRound(round);
   if (round > 1) {
